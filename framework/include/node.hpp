@@ -3,16 +3,17 @@
 
 #include <glm/gtc/type_precision.hpp>
 
+#include <memory>
 #include <vector>
 #include <string>
 
 class Node {
 public:
-    Node& getParent() const;
+    Node getParent() const; 
     void setParent(Node const& node);
 
-    Node& getChildren(std::string const& name) const;
-    std::vector<Node&> getChildrenList() const; //How do you save the elements inside the container? Reference blabla
+    Node getChildren(std::string const& name) const;
+    std::vector<std::shared_ptr<Node>> getChildrenList() const; 
 
     std::string getName() const;
     std::string getPath() const;
@@ -24,12 +25,12 @@ public:
     glm::fmat4 getWorldTransform() const;
     void setWorldTransform(glm::fmat4 const& mat);
 
+    Node removeChildren(std::string child); 
     void addChildren(Node const& child);
-    Node& removeChildren(std::string child); //Same question, how do you return the Node being a complex data type.
 
 protected:
-    Node* parent;
-    std::vector<Node> children;
+    std::shared_ptr<Node> parent;
+    std::vector<std::shared_ptr<Node>> children;
     std::string name;
     std::string path;
     int depth;

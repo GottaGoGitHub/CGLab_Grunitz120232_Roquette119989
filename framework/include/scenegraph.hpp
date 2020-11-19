@@ -9,14 +9,14 @@ public:
     std::string getName() const;
     void setName(std::string const& name);
 
-    Node& getRoot() const;
+    Node getRoot() const;
     void setRoot(Node const& name);
 
     std::string printGraph() const;
 
 private:
     std::string name;
-    Node* root; //Is this supposed to be a pointer??
+    std::shared_ptr<Node> root; //Is this supposed to be a pointer, or smart pointer?
 };
 
-#endif //SCEHENGRAPH_HPP
+#endif //SCENEGRAPH_HPP
