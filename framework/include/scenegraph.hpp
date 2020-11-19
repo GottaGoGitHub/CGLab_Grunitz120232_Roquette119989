@@ -6,17 +6,20 @@
 
 struct Scenegraph {
 public:
-    std::string getName() const;
-    void setName(std::string const& name);
+    Scenegraph();
+    ~Scenegraph();
 
-    Node getRoot() const;
-    void setRoot(Node const& name);
+    std::string getName() const;
+    void setName(std::string const& newName);
+
+    std::shared_ptr<Node> getRoot() const;
+    void setRoot(Node const& node);
 
     std::string printGraph() const;
 
 private:
-    std::string name;
-    std::shared_ptr<Node> root; //Is this supposed to be a pointer, or smart pointer?
+    std::string name_;
+    std::shared_ptr<Node> root_; //Is this supposed to be a pointer, or smart pointer? 
 };
 
 #endif //SCENEGRAPH_HPP
