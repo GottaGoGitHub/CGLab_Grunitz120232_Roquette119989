@@ -3,7 +3,7 @@
 
 #include "node.hpp"
 #include "model.hpp"
-
+#include <iostream>
 #include <string>
 
 class GeometryNode : public Node {
