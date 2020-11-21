@@ -2,6 +2,7 @@
 #define CAMERA_NODE_HPP
 
 #include "node.hpp"
+#include <iostream>
 
 class CameraNode : public Node {
 public:
