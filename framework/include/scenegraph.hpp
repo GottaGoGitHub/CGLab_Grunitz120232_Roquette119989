@@ -20,6 +20,10 @@ public:
 private:
     std::string name_;
     std::shared_ptr<Node> root_; //Is this supposed to be a pointer, or smart pointer? 
+
+    /*
+    immer smart pointer, weil wir zu faul sind speicher zu allokieren
+    */
 };
 
 #endif //SCENEGRAPH_HPP

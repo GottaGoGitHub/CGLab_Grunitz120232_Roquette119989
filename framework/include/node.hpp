@@ -22,6 +22,11 @@ public:
     std::shared_ptr<Node> getChildren(std::string const& name) const; //Whats the difference?
     std::vector<std::shared_ptr<Node>> getChildrenList() const; 
 
+    /* 
+    getChildren gibt uns einen shared pointer of eine node, die über den namen aufgelöst wird
+    getChildrenList gibt eine liste and shared pointern auf nodes von allen Children
+    */
+    
     std::string getName() const;
     std::string getPath() const;
     GLuint getDepth() const;

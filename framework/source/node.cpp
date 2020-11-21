@@ -2,10 +2,10 @@
 #include <iostream>
 
 Node::Node() : 
-    parent_{nullptr}, //Is this supposed to be root?
+    parent_{nullptr}, //Is this supposed to be root? Vermutlich
     children_{},
     name_{"unnamed_node"},
-    path_{"no idea"}, //How are we supposed to "name" this?
+    path_{"no idea"}, //How are we supposed to "name" this? Ist weird den path als string anzulegen
     depth_{},
     localtransform_{},
     worldtransform_{}
@@ -28,7 +28,8 @@ std::shared_ptr<Node> Node::getChildren(std::string const& name) const { //?????
     for(auto& i : children_) {
         if(i->name_ == name) {
             //I am confusion by this function
-        };
+            return i;
+        }
     };
     //Unclear
 }
