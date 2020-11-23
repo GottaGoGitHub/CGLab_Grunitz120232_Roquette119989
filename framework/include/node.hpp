@@ -15,6 +15,7 @@ using namespace gl;
 class Node {
 public:
     Node();
+    Node(std::shared_ptr<Node> const& parent, std::vector<std::shared_ptr<Node>> const& children, std::string const& name, std::string const& path, GLuint const& depth, glm::fmat4 const& local, glm::fmat4 const& world);
     ~Node();
 
     std::shared_ptr<Node> getParent() const; 

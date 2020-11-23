@@ -11,6 +11,16 @@ Node::Node() :
     worldtransform_{}
 {}
 
+Node::Node(std::shared_ptr<Node> const& parent, std::vector<std::shared_ptr<Node>> const& children, std::string const& name, std::string const& path, GLuint const& depth, glm::fmat4 const& local, glm::fmat4 const& world) : 
+    parent_{parent},
+    children_{children},
+    name_{name},
+    path_{path},
+    depth_{depth},
+    localtransform_{local},
+    worldtransform_{world}
+{}
+
 Node::~Node() { 
     std::cout << "Node has been destroyed." << std::endl;
 }
