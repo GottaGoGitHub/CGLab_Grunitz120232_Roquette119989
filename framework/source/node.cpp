@@ -72,5 +72,9 @@ void Node::addChildren(Node const& node) {
 }
 
 std::shared_ptr<Node> Node::removeChildren(std::string const& name) {
-    //children_.erase(std::remove_if(children_.begin(), children_.end(), [](std::string const& name){return name == ;}))
+    //children_.erase(std::remove_if(children_.begin(), children_.end(), [](std::string const& name){isEqual}))
+}
+
+bool Node::isEqual(std::string name, std::string nodename){
+    return name == nodename;
 }

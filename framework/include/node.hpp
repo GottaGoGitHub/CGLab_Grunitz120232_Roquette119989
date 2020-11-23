@@ -10,6 +10,7 @@ using namespace gl;
 #include <memory>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 class Node {
 public:
@@ -39,6 +40,8 @@ public:
 
     void addChildren(Node const& node);
     std::shared_ptr<Node> removeChildren(std::string const& name); 
+
+    bool isEqual(std::string name, std::string nodename);
 
 protected:
     std::shared_ptr<Node> parent_;
