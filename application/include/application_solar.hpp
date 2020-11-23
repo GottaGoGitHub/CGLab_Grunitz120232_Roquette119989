@@ -1,6 +1,8 @@
 #ifndef APPLICATION_SOLAR_HPP
 #define APPLICATION_SOLAR_HPP
 
+
+#include "scenegraph.hpp"
 #include "application.hpp"
 #include "model.hpp"
 #include "structs.hpp"
@@ -35,6 +37,8 @@ class ApplicationSolar : public Application {
 
   // cpu representation of model
   model_object planet_object;
+
+  Scenegraph solar_system;
   
   // camera transform matrix
   glm::fmat4 m_view_transform;

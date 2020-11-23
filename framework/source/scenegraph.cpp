@@ -2,7 +2,7 @@
 #include <iostream>
 
 Scenegraph::Scenegraph() : 
-    name_{"unnamed_graph"},
+    name_{"Solar System"},
     root_{nullptr} 
 {}
 
