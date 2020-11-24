@@ -6,6 +6,11 @@ Scenegraph::Scenegraph() :
     root_{nullptr} 
 {}
 
+Scenegraph::Scenegraph(std::string const& name, std::shared_ptr<Node> root) : 
+    name_{name},
+    root_{root}
+{}
+
 Scenegraph::~Scenegraph() { 
     std::cout << "Scenegraph deleted" << std::endl;
 }

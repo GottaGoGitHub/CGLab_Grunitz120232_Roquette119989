@@ -7,6 +7,7 @@
 struct Scenegraph {
 public:
     Scenegraph();
+    Scenegraph(std::string const& name, std::shared_ptr<Node> root);
     ~Scenegraph();
 
     std::string getName() const;
