@@ -1,6 +1,12 @@
 #include "geometry_node.hpp"
 
 GeometryNode::GeometryNode():
+    Node(),
+    geometry_{}
+{}
+
+GeometryNode::GeometryNode(std::shared_ptr<Node> parent, std::string const& name) : 
+    Node(parent, name),
     geometry_{}
 {}
 
@@ -18,4 +24,8 @@ model GeometryNode::getGeometry(){
 
 void GeometryNode::setGeometry(model const& model){
     geometry_ = model;
+}
+
+model_object GeometryNode::getObject() {
+    return geometryObject_;
 }

@@ -4,22 +4,28 @@
 Node::Node() : 
     parent_{nullptr}, //Is this supposed to be root? Vermutlich
     children_{},
-    name_{"unnamed_node"},
-    path_{"no idea"}, //How are we supposed to "name" this? Ist weird den path als string anzulegen
+    name_{"root"},
+    path_{"none"}, //How are we supposed to "name" this? Ist weird den path als string anzulegen
     depth_{},
     localtransform_{},
     worldtransform_{}
 {}
 
-Node::Node(Node const& parent, std::vector<std::shared_ptr<Node>> const& children, std::string const& name, std::string const& path, GLuint const& depth, glm::fmat4 const& local, glm::fmat4 const& world) : 
-    parent_{std::make_shared<Node>(parent)}, //Alternatively use Node as input with makeshared for "simpler" coding later?
+Node::Node(std::shared_ptr<Node> const& parent, std::string const& name) : 
+    parent_{parent},
+    name_{name}
+{}
+
+Node::Node(std::shared_ptr<Node> const& parent, std::vector<std::shared_ptr<Node>> const& children, std::string const& name, std::string const& path, GLuint const& depth, glm::fmat4 const& local, glm::fmat4 const& world) : 
+    parent_{parent}, //Alternatively use Node as input with makeshared for "simpler" coding later?
     children_{children},
     name_{name},
     path_{path},
     depth_{depth},
     localtransform_{local},
     worldtransform_{world}
-{}
+{//depth_ = parent_->getDepth() + 1;
+}
 
 Node::~Node() { 
     std::cout << "Node has been destroyed." << std::endl;
@@ -74,8 +80,7 @@ void Node::setWorldTransform(glm::fmat4 const& mat) {
     worldtransform_ = mat;
 }
 
-void Node::addChildren(Node const& node) {
-    auto newChild = std::make_shared<Node>(node);
+void Node::addChild(std::shared_ptr<Node> const& newChild) {
     children_.push_back(newChild);
 }
 

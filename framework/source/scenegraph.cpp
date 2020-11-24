@@ -6,7 +6,7 @@ Scenegraph::Scenegraph() :
     root_{nullptr} 
 {}
 
-Scenegraph::Scenegraph(std::string const& name, std::shared_ptr<Node> root) : 
+Scenegraph::Scenegraph(std::string const& name, std::shared_ptr<Node> const& root) : 
     name_{name},
     root_{root}
 {}

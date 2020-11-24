@@ -1,7 +1,8 @@
 #ifndef APPLICATION_SOLAR_HPP
 #define APPLICATION_SOLAR_HPP
 
-
+#include "node.hpp"
+#include "geometry_node.hpp"
 #include "scenegraph.hpp"
 #include "application.hpp"
 #include "model.hpp"
@@ -15,6 +16,9 @@ class ApplicationSolar : public Application {
   // free allocated objects
   ~ApplicationSolar();
 
+  //Initializes the complete "Solar System" with the help of a Graph
+  void initializeSceneGraph();
+
   // react to key input
   void keyCallback(int key, int action, int mods);
   //handle delta mouse movement input
@@ -24,6 +28,8 @@ class ApplicationSolar : public Application {
 
   // draw all objects
   void render() const;
+  // render all planets
+  void renderPlanets() const;
 
  protected:
   void initializeShaderPrograms();
@@ -38,7 +44,9 @@ class ApplicationSolar : public Application {
   // cpu representation of model
   model_object planet_object;
 
-  Scenegraph solar_system;
+  std::shared_ptr<Node> raum_;
+
+  std::vector<std::shared_ptr<GeometryNode>> geomList;
   
   // camera transform matrix
   glm::fmat4 m_view_transform;
