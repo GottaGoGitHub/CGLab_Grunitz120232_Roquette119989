@@ -12,7 +12,7 @@ Node::Node() :
 {}
 
 Node::Node(std::shared_ptr<Node> const& parent, std::vector<std::shared_ptr<Node>> const& children, std::string const& name, std::string const& path, GLuint const& depth, glm::fmat4 const& local, glm::fmat4 const& world) : 
-    parent_{parent},
+    parent_{parent}, //Alternatively use Node as input with makeshared for "simpler" coding later?
     children_{children},
     name_{name},
     path_{path},
@@ -34,14 +34,12 @@ void Node::setParent(Node const& node) {
     parent_ = newParent;
 }
 
-std::shared_ptr<Node> Node::getChildren(std::string const& name) const { //??????????????
+std::shared_ptr<Node> Node::getChildren(std::string const& name) const { 
     for(auto& i : children_) {
         if(i->name_ == name) {
-            //I am confusion by this function
             return i;
         }
     };
-    //Unclear
 }
 
 std::vector<std::shared_ptr<Node>> Node::getChildrenList() const {

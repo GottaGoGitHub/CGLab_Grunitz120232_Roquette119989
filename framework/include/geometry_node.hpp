@@ -9,13 +9,14 @@
 class GeometryNode : public Node {
 public:
     GeometryNode();
+    GeometryNode(model const& model);
     ~GeometryNode();
 
     model getGeometry();
     void setGeometry(model const& model);
     
 private:
-    model geometry;
+    model geometry_;
 };
 
 #endif //GEOMETRY_HPP

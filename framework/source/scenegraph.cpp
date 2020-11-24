@@ -12,7 +12,7 @@ Scenegraph::Scenegraph(std::string const& name, std::shared_ptr<Node> root) :
 {}
 
 Scenegraph::~Scenegraph() { 
-    std::cout << "Scenegraph deleted" << std::endl;
+    std::cout << "Scenegraph " << name_ << " deleted" << std::endl;
 }
 
 std::string Scenegraph::getName() const {
