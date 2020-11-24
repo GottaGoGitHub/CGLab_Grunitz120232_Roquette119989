@@ -11,8 +11,8 @@ Node::Node() :
     worldtransform_{}
 {}
 
-Node::Node(std::shared_ptr<Node> const& parent, std::vector<std::shared_ptr<Node>> const& children, std::string const& name, std::string const& path, GLuint const& depth, glm::fmat4 const& local, glm::fmat4 const& world) : 
-    parent_{parent}, //Alternatively use Node as input with makeshared for "simpler" coding later?
+Node::Node(Node const& parent, std::vector<std::shared_ptr<Node>> const& children, std::string const& name, std::string const& path, GLuint const& depth, glm::fmat4 const& local, glm::fmat4 const& world) : 
+    parent_{std::make_shared<Node>(parent)}, //Alternatively use Node as input with makeshared for "simpler" coding later?
     children_{children},
     name_{name},
     path_{path},
