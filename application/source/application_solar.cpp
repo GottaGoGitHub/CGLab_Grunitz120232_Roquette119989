@@ -118,8 +118,8 @@ void ApplicationSolar::initializeSceneGraph() {
 
   std::vector<std::shared_ptr<Node>> bentleyFlyingSpurChildren;
   auto bentleyFlyingSpurHolder = std::make_shared<Node>(raum, bentleyFlyingSpurChildren, "Bentley Flying Spur", "root->bentleyFlyingSpur", 1);
-  raum->addChild(bentleyFlyingSpurHolder);
-  auto bentleyFlyingSpur = std::make_shared<GeometryNode>(bentleyFlyingSpurHolder, "Bentley Flying Spur Holder");
+  mercedesMaybachHolder->addChild(bentleyFlyingSpurHolder);
+  auto bentleyFlyingSpur = std::make_shared<GeometryNode>(bentleyFlyingSpurHolder, "Bentley Flying Spur Geometry");
   bentleyFlyingSpurHolder->addChild(bentleyFlyingSpur);
   bentleyFlyingSpur->setGeometry(planet_model); 
 
@@ -146,12 +146,12 @@ void ApplicationSolar::renderPlanets() const {
 
   for(auto& planet : geomList) {
       // bind shader to upload uniforms
-      if(planet->getName() == "La Ferrari Geometry"){
+      if(planet->getName() == "Ich Geometry"){
 
         glUseProgram(m_shaders.at("planet").handle);
 
         planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime()), glm::fvec3{0.0f, 1.0f, 0.0f}));
-        planet->setWorldTransform(glm::scale(planet->getWorldTransform(), glm::fvec3{1.0f}));
+        planet->setWorldTransform(glm::scale(planet->getWorldTransform(), glm::fvec3{2.0f}));
         glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
                           1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
 
@@ -172,7 +172,7 @@ void ApplicationSolar::renderPlanets() const {
 
         glUseProgram(m_shaders.at("planet").handle);
 
-        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())/2, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime()), glm::fvec3{0.0f, 1.0f, 0.0f}));
         planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 3.0f}));
         glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
                           1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
@@ -190,6 +190,181 @@ void ApplicationSolar::renderPlanets() const {
 
       }
 
+      else if(planet->getName() == "Koenigsegg One Geometry"){
+
+        glUseProgram(m_shaders.at("planet").handle);
+
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*1.5f, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 5.0f}));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
+
+        // extra matrix for normal transformation to keep them orthogonal to surface
+        planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
+
+        // bind the VAO to draw
+        glBindVertexArray(planet_object.vertex_AO);
+
+        // draw bound vertex array using bound shader
+        glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+      }
+
+      else if(planet->getName() == "Ferrari F60 America Geometry"){
+
+        glUseProgram(m_shaders.at("planet").handle);
+
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*2.0f, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 8.0f}));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
+
+        // extra matrix for normal transformation to keep them orthogonal to surface
+        planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
+
+        // bind the VAO to draw
+        glBindVertexArray(planet_object.vertex_AO);
+
+        // draw bound vertex array using bound shader
+        glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+      }
+
+      else if(planet->getName() == "Mansory Vivere Bugatti Veyron Geometry"){
+
+        glUseProgram(m_shaders.at("planet").handle);
+
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*2.5f, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 11.0f}));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
+
+        // extra matrix for normal transformation to keep them orthogonal to surface
+        planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
+
+        // bind the VAO to draw
+        glBindVertexArray(planet_object.vertex_AO);
+
+        // draw bound vertex array using bound shader
+        glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+      }
+
+      else if(planet->getName() == "Lamborghini Veneno Geometry"){
+
+        glUseProgram(m_shaders.at("planet").handle);
+
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*3.0f, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 14.0f}));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
+
+        // extra matrix for normal transformation to keep them orthogonal to surface
+        planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
+
+        // bind the VAO to draw
+        glBindVertexArray(planet_object.vertex_AO);
+
+        // draw bound vertex array using bound shader
+        glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+      }
+
+      else if(planet->getName() == "Rolls Royce Phantom Geometry"){
+
+        glUseProgram(m_shaders.at("planet").handle);
+
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*3.5f, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 17.0f}));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
+
+        // extra matrix for normal transformation to keep them orthogonal to surface
+        planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
+
+        // bind the VAO to draw
+        glBindVertexArray(planet_object.vertex_AO);
+
+        // draw bound vertex array using bound shader
+        glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+      }
+
+      else if(planet->getName() == "Mercedes Maybach S650 Geometry"){
+
+        glUseProgram(m_shaders.at("planet").handle);
+
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*4, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 20.0f}));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
+
+        // extra matrix for normal transformation to keep them orthogonal to surface
+        planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
+
+        // bind the VAO to draw
+        glBindVertexArray(planet_object.vertex_AO);
+
+        // draw bound vertex array using bound shader
+        glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+      }
+
+      else if(planet->getName() == "La Ferrari Geometry"){
+
+        glUseProgram(m_shaders.at("planet").handle);
+
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*4.5f, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 23.0f}));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
+
+        // extra matrix for normal transformation to keep them orthogonal to surface
+        planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
+
+        // bind the VAO to draw
+        glBindVertexArray(planet_object.vertex_AO);
+
+        // draw bound vertex array using bound shader
+        glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+      }
+
+      else if(planet->getName() == "Bentley Flying Spur Geometry"){
+
+        glUseProgram(m_shaders.at("planet").handle);
+
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*4.5f, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 3.0f}));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
+
+        // extra matrix for normal transformation to keep them orthogonal to surface
+        planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
+
+        // bind the VAO to draw
+        glBindVertexArray(planet_object.vertex_AO);
+
+        // draw bound vertex array using bound shader
+        glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+      }
       
     
   }
