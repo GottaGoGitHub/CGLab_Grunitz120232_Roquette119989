@@ -122,6 +122,11 @@ void ApplicationSolar::initializeSceneGraph() {
   geomList.push_back(koenigsEggOne);
   geomList.push_back(ferrariFAmerica);
   geomList.push_back(bugattiVeyron);
+  geomList.push_back(ich);
+  geomList.push_back(lamborghiniVeneno);
+  geomList.push_back(rollsRoycePhantom);
+  geomList.push_back(mercedesMaybach);
+  geomList.push_back(bentleyFlyingSpur);
 
 }
 
