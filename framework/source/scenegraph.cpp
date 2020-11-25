@@ -33,6 +33,6 @@ void Scenegraph::setRoot(Node const& node) {
 }
 
 std::string Scenegraph::printGraph() const {
-    std::cout << "What am I supposed to print here?" << std::endl; //What?
+    
 }
 

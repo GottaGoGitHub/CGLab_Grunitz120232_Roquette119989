@@ -52,78 +52,99 @@ void ApplicationSolar::initializeSceneGraph() {
   auto laFerrariHolder = std::make_shared<Node>(raum, laFerrariChildren, "La Ferrari", "root->laFerrari", 1);
   //Connect Planet with root node
   raum->addChild(laFerrariHolder);
+  //set root as parent of holder
+  laFerrariHolder->setParent(raum);
   //Create GeometryNode of Planet
   auto laFerrari = std::make_shared<GeometryNode>(laFerrariHolder, "La Ferrari Geometry");
   //Connect Geometry Node with Planet holder
   laFerrariHolder->addChild(laFerrari);
+  //set holder as parent of geometry
+  laFerrari->setParent(laFerrariHolder);
   //Assign Planet Model to Geometry Node member variable
   laFerrari->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> astonMartinOneChildren;
   auto astonMartinOneHolder = std::make_shared<Node>(raum, astonMartinOneChildren, "Aston Martin One-77", "root->astonMartinOne", 1);
   raum->addChild(astonMartinOneHolder);
+  astonMartinOneHolder->setParent(raum);
   auto astonMartinOne = std::make_shared<GeometryNode>(astonMartinOneHolder, "Aston Martin One-77 Geometry");
   astonMartinOneHolder->addChild(astonMartinOne);
+  astonMartinOne->setParent(astonMartinOneHolder);
   astonMartinOne->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> koenigsEggOneChildren;
   auto koenigsEggOneHolder = std::make_shared<Node>(raum, koenigsEggOneChildren, "Koenigsegg One", "root->koenigsEggOne", 1);
   raum->addChild(koenigsEggOneHolder);
+  koenigsEggOneHolder->setParent(raum);
   auto koenigsEggOne = std::make_shared<GeometryNode>(koenigsEggOneHolder, "Koenigsegg One Geometry");
   koenigsEggOneHolder->addChild(koenigsEggOne);
+  koenigsEggOne->setParent(koenigsEggOneHolder);
   koenigsEggOne->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> ferrariFAmericaChildren;
   auto ferrariFAmericaHolder = std::make_shared<Node>(raum, ferrariFAmericaChildren, "Ferrari F60 America", "root->ferrariFAmerica", 1);
   raum->addChild(ferrariFAmericaHolder);
+  ferrariFAmericaHolder->setParent(raum);
   auto ferrariFAmerica = std::make_shared<GeometryNode>(ferrariFAmericaHolder, "Ferrari F60 America Geometry");
   ferrariFAmericaHolder->addChild(ferrariFAmerica);
+  ferrariFAmerica->setParent(ferrariFAmericaHolder);
   ferrariFAmerica->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> bugattiVeyronChildren;
   auto bugattiVeyronHolder = std::make_shared<Node>(raum, bugattiVeyronChildren, "Mansory Vivere Bugatti Veyron", "root->bugattiVeyron", 1);
   raum->addChild(bugattiVeyronHolder);
+  bugattiVeyronHolder->setParent(raum);
   auto bugattiVeyron = std::make_shared<GeometryNode>(bugattiVeyronHolder, "Mansory Vivere Bugatti Veyron Geometry");
   bugattiVeyronHolder->addChild(bugattiVeyron);
+  bugattiVeyron->setParent(bugattiVeyronHolder);
   bugattiVeyron->setGeometry(planet_model);
 
   //Das Zentrum des Universums, das Licht alles Lebens, die Sonne, ich
   std::vector<std::shared_ptr<Node>> ichChildren;
   auto ichHolder = std::make_shared<Node>(raum, ichChildren, "Ich", "root->ich", 1);
   raum->addChild(ichHolder);
+  ichHolder->setParent(raum);
   auto ich = std::make_shared<GeometryNode>(ichHolder, "Ich Geometry");
   ichHolder->addChild(ich);
+  ich->setParent(ichHolder);
   ich->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> lamborghiniVenenoChildren;
   auto lamborghiniVenenoHolder = std::make_shared<Node>(raum, lamborghiniVenenoChildren, "Lamborghini Veneno", "root->lamborghiniVeneno", 1);
   raum->addChild(lamborghiniVenenoHolder);
+  lamborghiniVenenoHolder->setParent(raum);
   auto lamborghiniVeneno = std::make_shared<GeometryNode>(lamborghiniVenenoHolder, "Lamborghini Veneno Geometry");
   lamborghiniVenenoHolder->addChild(lamborghiniVeneno);
+  lamborghiniVeneno->setParent(lamborghiniVenenoHolder);
   lamborghiniVeneno->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> rollsRoycePhantomChildren;
   auto rollsRoycePhantomHolder = std::make_shared<Node>(raum, rollsRoycePhantomChildren, "Rolls Royce Phantom", "root->rollsRoycePhantom", 1);
   raum->addChild(rollsRoycePhantomHolder);
+  rollsRoycePhantomHolder->setParent(raum);
   auto rollsRoycePhantom = std::make_shared<GeometryNode>(rollsRoycePhantomHolder, "Rolls Royce Phantom Geometry");
   rollsRoycePhantomHolder->addChild(rollsRoycePhantom);
+  rollsRoycePhantom->setParent(rollsRoycePhantomHolder);
   rollsRoycePhantom->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> mercedesMaybachChildren;
   auto mercedesMaybachHolder = std::make_shared<Node>(raum, mercedesMaybachChildren, "Mercedes Maybach S650", "root->mercedesMaybach", 1);
   raum->addChild(mercedesMaybachHolder);
+  mercedesMaybachHolder->setParent(raum);
   auto mercedesMaybach = std::make_shared<GeometryNode>(mercedesMaybachHolder, "Mercedes Maybach S650 Geometry");
   mercedesMaybachHolder->addChild(mercedesMaybach);
+  mercedesMaybach->setParent(mercedesMaybachHolder);
   mercedesMaybach->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> bentleyFlyingSpurChildren;
   auto bentleyFlyingSpurHolder = std::make_shared<Node>(raum, bentleyFlyingSpurChildren, "Bentley Flying Spur", "root->bentleyFlyingSpur", 1);
-  mercedesMaybachHolder->addChild(bentleyFlyingSpurHolder);
   auto bentleyFlyingSpur = std::make_shared<GeometryNode>(bentleyFlyingSpurHolder, "Bentley Flying Spur Geometry");
   bentleyFlyingSpurHolder->addChild(bentleyFlyingSpur);
   bentleyFlyingSpur->setParent(bentleyFlyingSpurHolder);
   bentleyFlyingSpur->setGeometry(planet_model); 
-  bentleyFlyingSpurHolder->setParent(mercedesMaybach);
+  //bentley is moon of mercedes
+  mercedesMaybachHolder->addChild(bentleyFlyingSpurHolder);
+  bentleyFlyingSpurHolder->setParent(mercedesMaybachHolder);
 
 
   //Add all Geometry Node to the List
@@ -350,7 +371,8 @@ void ApplicationSolar::renderPlanets() const {
 
         glUseProgram(m_shaders.at("planet").handle);
 
-        planet->setWorldTransform(glm::rotate(planet->getParent()->getParent()->getWorldTransform(), float(glfwGetTime())*10, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        //geometry parent is holder -> holder parent is another holder -> from parent holder get children
+        planet->setWorldTransform(glm::rotate(planet->getParent()->getParent()->getChildren("Mercedes Maybach S650 Geometry")->getWorldTransform(), float(glfwGetTime())*10, glm::fvec3{0.0f, 1.0f, 0.0f}));
         planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 1.4f}));
         planet->setWorldTransform(glm::scale(planet->getWorldTransform(), glm::fvec3{0.4f}));
         

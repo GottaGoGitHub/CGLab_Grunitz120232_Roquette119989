@@ -2,10 +2,10 @@
 #include <iostream>
 
 Node::Node() : 
-    parent_{nullptr}, //Is this supposed to be root? Vermutlich
+    parent_{nullptr},
     children_{},
     name_{"root"},
-    path_{"none"}, //How are we supposed to "name" this? Ist weird den path als string anzulegen
+    path_{"none"},
     depth_{},
     localtransform_{},
     worldtransform_{}
@@ -22,9 +22,7 @@ Node::Node(std::shared_ptr<Node> const& parent, std::vector<std::shared_ptr<Node
     name_{name},
     path_{path},
     depth_{depth}
-{
-    //depth_ = parent_->getDepth() + 1;
-}
+{}
 
 Node::~Node() { 
     std::cout << "Node has been destroyed." << std::endl;
@@ -83,7 +81,14 @@ void Node::addChild(std::shared_ptr<Node> const& newChild) {
 }
 
 std::shared_ptr<Node> Node::removeChildren(std::string const& name) {
-    //children_.erase(std::remove_if(children_.begin(), children_.end(), [](std::string const& name){isEqual}))
+    for(auto& i : children_){
+        auto it = children_.begin();
+        if(name_ == name){
+            i->setParent(nullptr);
+            children_.erase(it);
+        }
+        it++;
+    }
 }
 
 bool Node::isEqual(std::string name, std::string nodename){
