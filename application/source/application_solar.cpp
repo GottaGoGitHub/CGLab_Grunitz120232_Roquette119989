@@ -45,35 +45,35 @@ void ApplicationSolar::initializeSceneGraph() {
   model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL);
   
   std::vector<std::shared_ptr<Node>> laFerrariChildren;
-  auto laFerrariHolder = std::make_shared<Node>(raum, laFerrariChildren, "La Ferrari Holder", "root->laFerrari", 1, glm::rotate(m_view_transform, 2.0f, {0,0,1}), glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}));
+  auto laFerrariHolder = std::make_shared<Node>(raum, laFerrariChildren, "La Ferrari", "root->laFerrari", 1, glm::rotate(m_view_transform, 2.0f, {0,0,1}), glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}));
   raum->addChild(laFerrariHolder);
   auto laFerrari = std::make_shared<GeometryNode>(laFerrariHolder, "La Ferrari Geometry");
   laFerrariHolder->addChild(laFerrari);
   laFerrari->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> astonMartinOneChildren;
-  auto astonMartinOneHolder = std::make_shared<Node>(raum, astonMartinOneChildren, "Aston Martin One-77 Holder", "root->astonMartinOne", 1, glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}), glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}));
+  auto astonMartinOneHolder = std::make_shared<Node>(raum, astonMartinOneChildren, "Aston Martin One-77", "root->astonMartinOne", 1, glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}), glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}));
   raum->addChild(astonMartinOneHolder);
   auto astonMartinOne = std::make_shared<GeometryNode>(astonMartinOneHolder, "Aston Martin One-77 Geometry");
   astonMartinOneHolder->addChild(astonMartinOne);
   astonMartinOne->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> koenigsEggOneChildren;
-  auto koenigsEggOneHolder = std::make_shared<Node>(raum, koenigsEggOneChildren, "Koenigsegg One Holder", "root->koenigsEggOne", 1, glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}), glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}));
+  auto koenigsEggOneHolder = std::make_shared<Node>(raum, koenigsEggOneChildren, "Koenigsegg One", "root->koenigsEggOne", 1, glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}), glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}));
   raum->addChild(koenigsEggOneHolder);
   auto koenigsEggOne = std::make_shared<GeometryNode>(koenigsEggOneHolder, "Koenigsegg One Geometry");
   koenigsEggOneHolder->addChild(koenigsEggOne);
   koenigsEggOne->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> ferrariFAmericaChildren;
-  auto ferrariFAmericaHolder = std::make_shared<Node>(raum, ferrariFAmericaChildren, "Ferrari F60 America Holder", "root->ferrariFAmerica", 1, glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}), glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}));
+  auto ferrariFAmericaHolder = std::make_shared<Node>(raum, ferrariFAmericaChildren, "Ferrari F60 America", "root->ferrariFAmerica", 1, glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}), glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}));
   raum->addChild(ferrariFAmericaHolder);
   auto ferrariFAmerica = std::make_shared<GeometryNode>(ferrariFAmericaHolder, "Ferrari F60 America Geometry");
   ferrariFAmericaHolder->addChild(ferrariFAmerica);
   ferrariFAmerica->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> bugattiVeyronChildren;
-  auto bugattiVeyronHolder = std::make_shared<Node>(raum, bugattiVeyronChildren, "Mansory Vivere Bugatti Veyron Holder", "root->bugattiVeyron", 1, glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}), glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}));
+  auto bugattiVeyronHolder = std::make_shared<Node>(raum, bugattiVeyronChildren, "Mansory Vivere Bugatti Veyron", "root->bugattiVeyron", 1, glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}), glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 1.0f}));
   raum->addChild(bugattiVeyronHolder);
   auto bugattiVeyron = std::make_shared<GeometryNode>(bugattiVeyronHolder, "Mansory Vivere Bugatti Veyron Geometry");
   bugattiVeyronHolder->addChild(bugattiVeyron);
@@ -96,23 +96,51 @@ void ApplicationSolar::renderPlanets() const {
 
   for(auto& planet : geomList) {
       // bind shader to upload uniforms
-      glUseProgram(m_shaders.at("planet").handle);
+      if(planet->getName() == "La Ferrari Geometry"){
 
-      planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime()), glm::fvec3{0.0f, 1.0f, 0.0f}));
-      planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, -1.0f}));
-      glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
-                        1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
+        glUseProgram(m_shaders.at("planet").handle);
 
-      // extra matrix for normal transformation to keep them orthogonal to surface
-      planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
-      glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
-                        1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*1.5f, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, -1.0f}));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
 
-      // bind the VAO to draw
-      glBindVertexArray(planet->getObject().vertex_AO);
+        // extra matrix for normal transformation to keep them orthogonal to surface
+        planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
 
-      // draw bound vertex array using bound shader
-      glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+        // bind the VAO to draw
+        glBindVertexArray(planet_object.vertex_AO);
+
+        // draw bound vertex array using bound shader
+        glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+      }
+
+      else if(planet->getName() == "Aston Martin One-77 Geometry"){
+
+        glUseProgram(m_shaders.at("planet").handle);
+
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*4.0f, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, -1.0f}));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
+
+        // extra matrix for normal transformation to keep them orthogonal to surface
+        planet->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform()));
+        glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getLocalTransform()));
+
+        // bind the VAO to draw
+        glBindVertexArray(planet_object.vertex_AO);
+
+        // draw bound vertex array using bound shader
+        glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+      }
+
+      
     
   }
 }
