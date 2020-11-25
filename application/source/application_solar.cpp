@@ -100,8 +100,8 @@ void ApplicationSolar::renderPlanets() const {
 
         glUseProgram(m_shaders.at("planet").handle);
 
-        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*1.5f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, -1.0f}));
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime()), glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::scale(planet->getWorldTransform(), glm::fvec3{1.0f}));
         glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
                           1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
 
@@ -122,8 +122,8 @@ void ApplicationSolar::renderPlanets() const {
 
         glUseProgram(m_shaders.at("planet").handle);
 
-        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*4.0f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, -1.0f}));
+        planet->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())/2, glm::fvec3{0.0f, 1.0f, 0.0f}));
+        planet->setWorldTransform(glm::translate(planet->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 3.0f}));
         glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
                           1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
 
