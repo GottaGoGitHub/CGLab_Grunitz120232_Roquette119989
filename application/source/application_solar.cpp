@@ -38,17 +38,25 @@ ApplicationSolar::~ApplicationSolar() {
 
 void ApplicationSolar::initializeSceneGraph() {
 
+  //Create root node and make it a shared ptr
   auto raum = std::make_shared<Node>(nullptr, "root");
   raum_ = raum;
+  //Initialize Scenegraph with root node
   Scenegraph solar_system("Solarium", raum);
 
   model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL);
   
+  //Create vector to store children of planet 
   std::vector<std::shared_ptr<Node>> laFerrariChildren;
+  //Create Planet holder
   auto laFerrariHolder = std::make_shared<Node>(raum, laFerrariChildren, "La Ferrari", "root->laFerrari", 1);
+  //Connect Planet with root node
   raum->addChild(laFerrariHolder);
+  //Create GeometryNode of Planet
   auto laFerrari = std::make_shared<GeometryNode>(laFerrariHolder, "La Ferrari Geometry");
+  //Connect Geometry Node with Planet holder
   laFerrariHolder->addChild(laFerrari);
+  //Assign Planet Model to Geometry Node member variable
   laFerrari->setGeometry(planet_model);
 
   std::vector<std::shared_ptr<Node>> astonMartinOneChildren;
