@@ -34,9 +34,8 @@ std::shared_ptr<Node> Node::getParent() const {
     return parent_;
 }
 
-void Node::setParent(Node const& node) {
-    auto newParent = std::make_shared<Node>(node);
-    parent_ = newParent;
+void Node::setParent(std::shared_ptr<Node> const& node) {
+    parent_ = node;
 }
 
 std::shared_ptr<Node> Node::getChildren(std::string const& name) const { 

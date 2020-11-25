@@ -20,7 +20,7 @@ public:
     ~Node();
 
     std::shared_ptr<Node> getParent() const; 
-    void setParent(Node const& node);
+    void setParent(std::shared_ptr<Node> const& node);
 
     std::shared_ptr<Node> getChildren(std::string const& name) const; 
     std::vector<std::shared_ptr<Node>> getChildrenList() const; 
