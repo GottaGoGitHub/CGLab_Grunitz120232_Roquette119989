@@ -95,7 +95,7 @@ glm::fmat4 Node::getLocalTransform() const {
 }
 
 void Node::setLocalTransform(glm::fmat4 const& mat) {
-    localtransform_ = mat;
+    localtransform_ = localtransform_ * mat;
 }
 
 glm::fmat4 Node::getWorldTransform() const {

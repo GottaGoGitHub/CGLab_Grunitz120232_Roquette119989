@@ -115,10 +115,11 @@ void ApplicationSolar::initializeSceneGraph() {
   //Das Zentrum des Universums, das Licht alles Lebens, die Sonne, ich
   auto ichHolder = std::make_shared<Node>(raum, "Ich", "root->ich", 1);
   raum->addChild(ichHolder);
-  ichHolder->setLocalTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime() * 20.0f), glm::fvec3{0.0f, 1.0f, 0.0f}));
+  ichHolder->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime() * 14.0f), glm::fvec3{0.0f, 1.0f, 0.0f}));
   ichHolder->setLocalTransform(glm::scale(ichHolder->getWorldTransform(), glm::fvec3{2.0f, 2.0f, 2.0f}));
   auto ich = std::make_shared<GeometryNode>(ichHolder, "Ich Geometry");
   ichHolder->addChild(ich);
+  ich->setWorldTransform(ichHolder->getLocalTransform());
   //ich->setGeometry(planet_model);
 
   auto lamborghiniVenenoHolder = std::make_shared<Node>(raum, "Lamborghini Veneno", "root->lamborghiniVeneno", 1);
@@ -129,6 +130,7 @@ void ApplicationSolar::initializeSceneGraph() {
   lamborghiniVenenoHolder->addChild(lamborghiniVeneno);
   //lamborghiniVeneno->setGeometry(planet_model);
   lamborghiniVeneno->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * lamborghiniVenenoHolder->getWorldTransform()));
+  lamborghiniVeneno->setWorldTransform(lamborghiniVenenoHolder->getLocalTransform());
 
   auto rollsRoycePhantomHolder = std::make_shared<Node>(raum, "Rolls Royce Phantom", "root->rollsRoycePhantom", 1);
   raum->addChild(rollsRoycePhantomHolder);
@@ -138,6 +140,7 @@ void ApplicationSolar::initializeSceneGraph() {
   rollsRoycePhantomHolder->addChild(rollsRoycePhantom);
   //rollsRoycePhantom->setGeometry(planet_model);
   rollsRoycePhantom->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * rollsRoycePhantom->getWorldTransform()));
+  rollsRoycePhantom->setWorldTransform(rollsRoycePhantomHolder->getLocalTransform());
 
   auto mercedesMaybachHolder = std::make_shared<Node>(raum, "Mercedes Maybach S650", "root->mercedesMaybach", 1);
   raum->addChild(mercedesMaybachHolder);
@@ -147,7 +150,9 @@ void ApplicationSolar::initializeSceneGraph() {
   mercedesMaybachHolder->addChild(mercedesMaybach);
   //mercedesMaybach->setGeometry(planet_model);
   mercedesMaybach->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * mercedesMaybach->getWorldTransform()));
+  mercedesMaybach->setWorldTransform(mercedesMaybachHolder->getLocalTransform());
 
+  /*
   auto bentleyFlyingSpurHolder = std::make_shared<Node>(mercedesMaybachHolder, "Bentley Flying Spur", "root->bentleyFlyingSpur", 1);
   mercedesMaybachHolder->addChild(bentleyFlyingSpurHolder);
   bentleyFlyingSpurHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 8.0f, glm::fvec3{0.0f, 1.0f, 0.0f}));
@@ -156,7 +161,7 @@ void ApplicationSolar::initializeSceneGraph() {
   bentleyFlyingSpurHolder->addChild(bentleyFlyingSpur);
   //bentleyFlyingSpur->setGeometry(planet_model); 
   bentleyFlyingSpur->setLocalTransform(glm::inverseTranspose(glm::inverse(m_view_transform) * bentleyFlyingSpur->getWorldTransform()));
-  
+  */
 
   //Add all Geometry Node to the List
   /*
@@ -170,7 +175,7 @@ void ApplicationSolar::initializeSceneGraph() {
   geomList.push_back(lamborghiniVeneno);
   geomList.push_back(rollsRoycePhantom);
   geomList.push_back(mercedesMaybach);
-  geomList.push_back(bentleyFlyingSpur);
+  //geomList.push_back(bentleyFlyingSpur);
 
 }
 
@@ -187,23 +192,22 @@ void ApplicationSolar::renderPlanets() const {
 
   for(auto& planet : geomList) {
     planet->setGeometry(planet_model);
-  }
 
-  glUseProgram(m_shaders.at("planet").handle);
+    glUseProgram(m_shaders.at("planet").handle);
 
-  glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
-                          1, GL_FALSE, glm::value_ptr(model_matrix));
+    glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
+                          1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
 
-        // extra matrix for normal transformation to keep them orthogonal to surface
-  glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
+    // extra matrix for normal transformation to keep them orthogonal to surface
+    glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
                           1, GL_FALSE, glm::value_ptr(normal_matrix));
 
-        // bind the VAO to draw
-  glBindVertexArray(planet_object.vertex_AO);
+    // bind the VAO to draw
+    glBindVertexArray(planet_object.vertex_AO);
 
-        // draw bound vertex array using bound shader
-  glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
-    
+    // draw bound vertex array using bound shader
+    glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+  }   
 }
 
 void ApplicationSolar::uploadView() {
