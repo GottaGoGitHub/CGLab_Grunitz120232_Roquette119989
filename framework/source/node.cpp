@@ -6,7 +6,7 @@ Node::Node() :
     children_{},
     name_{"root"},
     path_{"none"},
-    depth_{},
+    depth_{0},
     localtransform_{},
     worldtransform_{}
 {}
@@ -16,11 +16,10 @@ Node::Node(std::shared_ptr<Node> const& parent, std::string const& name) :
     name_{name}
 {}
 
-Node::Node(std::shared_ptr<Node> const& parent, std::string const& name, glm::fmat4 const& local, glm::fmat4 const& world) : 
+Node::Node(std::shared_ptr<Node> const& parent, std::string const& name, glm::fmat4 const& local) : 
     parent_{parent},
     name_{name},
-    localtransform_{local},
-    worldtransform_{world}
+    localtransform_{local}
 {}
 
 Node::Node(std::shared_ptr<Node> const& parent, std::string const& name, std::string const& path, GLuint const& depth) : 
@@ -66,6 +65,11 @@ std::shared_ptr<Node> Node::getChildren(std::string const& name) const {
     for(auto& i : children_) {
         if(i->name_ == name) {
             return i;
+        } else { //Try children of children until you reach the end
+            auto childname = i->getChildren(name);
+            if(childname != nullptr) {
+                return i->getChildren(name);
+            }
         }
     };
 }
@@ -95,7 +99,11 @@ void Node::setLocalTransform(glm::fmat4 const& mat) {
 }
 
 glm::fmat4 Node::getWorldTransform() const {
-    return worldtransform_;
+    if(parent_ == nullptr) {
+        return localtransform_;
+    } else {
+        return parent_->getWorldTransform() * localtransform_; 
+    }
 }
 
 void Node::setWorldTransform(glm::fmat4 const& mat) {

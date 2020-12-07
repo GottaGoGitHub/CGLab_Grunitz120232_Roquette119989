@@ -10,8 +10,8 @@ GeometryNode::GeometryNode(std::shared_ptr<Node> parent, std::string const& name
     geometry_{}
 {}
 
-GeometryNode::GeometryNode(std::shared_ptr<Node> parent, std::string const& name, glm::fmat4 const& local, glm::fmat4 const& world) : 
-    Node(parent, name, local, world),
+GeometryNode::GeometryNode(std::shared_ptr<Node> parent, std::string const& name, glm::fmat4 const& local) : 
+    Node(parent, name, local),
     geometry_{}
 {}
 

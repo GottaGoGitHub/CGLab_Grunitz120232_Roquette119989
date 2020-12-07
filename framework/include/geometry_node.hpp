@@ -11,7 +11,7 @@ class GeometryNode : public Node {
 public:
     GeometryNode();
     GeometryNode(std::shared_ptr<Node> parent, std::string const& name);
-    GeometryNode(std::shared_ptr<Node> parent, std::string const& name, glm::fmat4 const& local, glm::fmat4 const& world);
+    GeometryNode(std::shared_ptr<Node> parent, std::string const& name, glm::fmat4 const& local);
     GeometryNode(model const& model);
     ~GeometryNode();
 
