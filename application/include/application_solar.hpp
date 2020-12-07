@@ -19,6 +19,8 @@ class ApplicationSolar : public Application {
   //Initializes the complete "Solar System" with the help of a Graph
   void initializeSceneGraph();
 
+  void initializeStars();
+
   // react to key input
   void keyCallback(int key, int action, int mods);
   //handle delta mouse movement input
@@ -43,6 +45,7 @@ class ApplicationSolar : public Application {
 
   // cpu representation of model
   model_object planet_object;
+  model_object star_object;
 
   std::shared_ptr<Node> raum_;
 
