@@ -185,7 +185,9 @@ void ApplicationSolar::renderPlanets() const {
   glm::fmat4 model_matrix = glm::rotate(glm::fmat4{}, float(glfwGetTime()), glm::fvec3{1.0f});
   glm::fmat4 normal_matrix = glm::inverseTranspose(glm::inverse(m_view_transform) * model_matrix);
 
-      // bind shader to upload uniforms
+  for(auto& planet : geomList) {
+    planet->setGeometry(planet_model);
+  }
 
   glUseProgram(m_shaders.at("planet").handle);
 
