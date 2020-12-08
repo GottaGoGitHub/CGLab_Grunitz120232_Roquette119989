@@ -9,7 +9,9 @@ Node::Node() :
     depth_{0},
     localtransform_{},
     worldtransform_{}
-{}
+{
+    std::cout << "Node " + name_ + " created" << std::endl;
+}
 
 Node::Node(std::shared_ptr<Node> const& parent, std::string const& name) : 
     parent_{parent},
@@ -91,19 +93,25 @@ GLuint Node::getDepth() const {
 }
 
 glm::fmat4 Node::getLocalTransform() const {
+    /* if(parent_ == nullptr) {
+        return localtransform_;
+    } else {
+        return parent_->getWorldTransform() * localtransform_; 
+    } */
     return localtransform_;
 }
 
 void Node::setLocalTransform(glm::fmat4 const& mat) {
-    localtransform_ = localtransform_ * mat;
+    localtransform_ = mat;
 }
 
 glm::fmat4 Node::getWorldTransform() const {
-    if(parent_ == nullptr) {
-        return localtransform_;
+    /* if(parent_ == nullptr) {
+        return worldtransform_;
     } else {
-        return parent_->getWorldTransform() * localtransform_; 
-    }
+        return parent_->getWorldTransform() * localtransform_;
+    } */
+    return worldtransform_;
 }
 
 void Node::setWorldTransform(glm::fmat4 const& mat) {
