@@ -63,6 +63,7 @@ void ApplicationSolar::initializeSceneGraph() {
   auto laFerrari = std::make_shared<GeometryNode>(laFerrariHolder, "La Ferrari Geometry");
   //Connect Geometry Node with Planet holder
   laFerrariHolder->addChild(laFerrari);
+  laFerrari->setWorldTransform(laFerrariHolder->getWorldTransform());
 
   
   auto astonMartinOneHolder = std::make_shared<Node>(raum, "Aston Martin One-77", "root->astonMartinOne", 1);
@@ -71,7 +72,7 @@ void ApplicationSolar::initializeSceneGraph() {
   astonMartinOneHolder->setWorldTransform(glm::translate(astonMartinOneHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 3.0f}));
   auto astonMartinOne = std::make_shared<GeometryNode>(astonMartinOneHolder, "Aston Martin One-77 Geometry");
   astonMartinOneHolder->addChild(astonMartinOne);
-  astonMartinOne->setWorldTransform(astonMartinOne->getWorldTransform());
+  astonMartinOne->setWorldTransform(astonMartinOneHolder->getWorldTransform());
 
   auto koenigsEggOneHolder = std::make_shared<Node>(raum, "Koenigsegg One", "root->koenigsEggOne", 1);
   raum->addChild(koenigsEggOneHolder);
@@ -79,7 +80,7 @@ void ApplicationSolar::initializeSceneGraph() {
   koenigsEggOneHolder->setWorldTransform(glm::translate(koenigsEggOneHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 5.0f}));
   auto koenigsEggOne = std::make_shared<GeometryNode>(koenigsEggOneHolder, "Koenigsegg One Geometry");
   koenigsEggOneHolder->addChild(koenigsEggOne);
-  koenigsEggOne->setWorldTransform(koenigsEggOne->getWorldTransform());
+  koenigsEggOne->setWorldTransform(koenigsEggOneHolder->getWorldTransform());
 
   auto ferrariFAmericaHolder = std::make_shared<Node>(raum, "Ferrari F60 America", "root->ferrariFAmerica", 1);
   raum->addChild(ferrariFAmericaHolder);
