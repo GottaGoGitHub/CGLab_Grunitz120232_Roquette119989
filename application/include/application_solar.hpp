@@ -19,7 +19,6 @@ class ApplicationSolar : public Application {
   //Initializes the complete "Solar System" with the help of a Graph
   void initializeSceneGraph();
 
-  void initializeStars();
 
   // react to key input
   void keyCallback(int key, int action, int mods);
@@ -32,10 +31,12 @@ class ApplicationSolar : public Application {
   void render() const;
   // render all planets
   void renderPlanets() const;
+  void renderStars() const;
 
  protected:
   void initializeShaderPrograms();
   void initializeGeometry();
+  void initializeStars();
   // update uniform values
   void uploadUniforms();
   // upload projection matrix

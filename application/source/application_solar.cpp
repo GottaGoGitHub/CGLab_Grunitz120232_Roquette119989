@@ -22,12 +22,12 @@ using namespace gl;
 ApplicationSolar::ApplicationSolar(std::string const& resource_path)
  :Application{resource_path}
  ,planet_object{}
- //,star_object{}
+ ,star_object{}
  ,m_view_transform{glm::translate(glm::fmat4{}, glm::fvec3{0.0f, 0.0f, 4.0f})}
  ,m_view_projection{utils::calculate_projection_matrix(initial_aspect_ratio)}
 {
   initializeSceneGraph();
-  //initializeStars();
+  initializeStars();
   initializeGeometry();
   initializeShaderPrograms();
 }
@@ -36,9 +36,9 @@ ApplicationSolar::~ApplicationSolar() {
   glDeleteBuffers(1, &planet_object.vertex_BO);
   glDeleteBuffers(1, &planet_object.element_BO);
   glDeleteVertexArrays(1, &planet_object.vertex_AO);
-  //glDeleteBuffers(1, &star_object.vertex_BO);
-  //glDeleteBuffers(1, &star_object.element_BO);
-  //glDeleteVertexArrays(1, &star_object.vertex_AO);
+  glDeleteBuffers(1, &star_object.vertex_BO);
+  glDeleteBuffers(1, &star_object.element_BO);
+  glDeleteVertexArrays(1, &star_object.vertex_AO);
 }
 
 void ApplicationSolar::initializeSceneGraph() {
@@ -48,6 +48,11 @@ void ApplicationSolar::initializeSceneGraph() {
   raum_ = raum;
   //Initialize Scenegraph with root node
   Scenegraph solar_system("Solarium", raum);
+
+
+  //create node for all stars in the scene
+  auto star_container = std::make_shared<Node>(raum, "stars");
+  raum->addChild(star_container);
   
   //Create vector to store children of planet 
   //std::vector<std::shared_ptr<Node>> laFerrariChildren;
@@ -179,8 +184,67 @@ void ApplicationSolar::initializeSceneGraph() {
 
 }
 
+void ApplicationSolar::initializeStars(){
+
+  int const amount = 10000;
+  std::vector<float> stars;
+  for(int i = 0; i < amount; i++){
+    //init position
+    float x = (float)(rand() % 100) - 20;
+    stars.push_back(x);
+    float y = (float)(rand() % 100) - 20;
+    stars.push_back(y);
+    float z = (float)(rand() % 100) - 20;
+    stars.push_back(z);
+    //init color
+    float r = (float)(rand() % 255) / 255.0f;
+    stars.push_back(r);
+    float g = (float)(rand() % 255) / 255.0f;
+    stars.push_back(g);
+    float b = (float)(rand() % 255) / 255.0f;
+    stars.push_back(b);
+  }
+
+    // generate vertex array object
+  glGenVertexArrays(1, &star_object.vertex_AO);
+  // bind the array for attaching buffers
+  glBindVertexArray(star_object.vertex_AO);
+
+  // generate generic buffer
+  glGenBuffers(1, &star_object.vertex_BO);
+  // bind this as an vertex array buffer containing all attributes
+  glBindBuffer(GL_ARRAY_BUFFER, star_object.vertex_BO);
+  // configure currently bound array buffer
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * stars.size(), stars.data(), GL_STATIC_DRAW);
+
+  // activate first attribute on gpu
+  glEnableVertexAttribArray(0);
+  // first attribute is 3 floats with no offset & stride
+
+  //!!!
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, GLsizei(6*sizeof(float)), 0);
+  //!!!
+
+
+  // activate second attribute on gpu
+  glEnableVertexAttribArray(1);
+  // second attribute is 3 floats with no offset & stride
+
+
+  //!!!
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, GLsizei(6*sizeof(float)), (void*)(sizeof(float) * 3));
+  //!!!
+
+  // store type of primitive to draw
+  star_object.draw_mode = GL_POINTS;
+  // transfer number of indices to model object 
+  star_object.num_elements = GLsizei(amount);
+
+}
+
 void ApplicationSolar::render() const {
   renderPlanets();
+  renderStars();
 }
 
 void ApplicationSolar::renderPlanets() const {
@@ -212,24 +276,47 @@ void ApplicationSolar::renderPlanets() const {
   }   
 }
 
+void ApplicationSolar::renderStars() const{
+  
+  glUseProgram(m_shaders.at("stars").handle);
+
+  glBindVertexArray(star_object.vertex_AO);
+  
+  glDrawArrays(star_object.draw_mode, GLint(0), star_object.num_elements);
+
+}
+
 void ApplicationSolar::uploadView() {
   // vertices are transformed in camera space, so camera transform must be inverted
   glm::fmat4 view_matrix = glm::inverse(m_view_transform);
   // upload matrix to gpu
+
+  glUseProgram(m_shaders.at("planet").handle);
   glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ViewMatrix"),
-                     1, GL_FALSE, glm::value_ptr(view_matrix));glBindVertexArray(planet_object.vertex_AO);
+                     1, GL_FALSE, glm::value_ptr(view_matrix));
+
+  glUseProgram(m_shaders.at("stars").handle);
+  glUniformMatrix4fv(m_shaders.at("stars").u_locs.at("ModelViewMatrix"),
+                     1, GL_FALSE, glm::value_ptr(view_matrix));
 }
 
 void ApplicationSolar::uploadProjection() {
   // upload matrix to gpu
+
+  glUseProgram(m_shaders.at("planet").handle);
   glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ProjectionMatrix"),
+                     1, GL_FALSE, glm::value_ptr(m_view_projection));
+
+
+  glUseProgram(m_shaders.at("stars").handle);
+  glUniformMatrix4fv(m_shaders.at("stars").u_locs.at("ProjectionMatrix"),
                      1, GL_FALSE, glm::value_ptr(m_view_projection));
 }
 
 // update uniform locations
 void ApplicationSolar::uploadUniforms() { 
   // bind shader to which to upload unforms
-  glUseProgram(m_shaders.at("planet").handle);
+  //glUseProgram(m_shaders.at("planet").handle);
   // upload uniform values to new locations
   uploadView();
   uploadProjection();
@@ -248,10 +335,12 @@ void ApplicationSolar::initializeShaderPrograms() {
   m_shaders.at("planet").u_locs["ProjectionMatrix"] = -1;
 
   // store star shader   
-  //m_shaders.emplace("stars", shader_program{{{GL_VERTEX_SHADER,m_resource_path + "shaders/vao.vert"}, {GL_FRAGMENT_SHADER, m_resource_path + "shaders/vao.frag"}}});      
+  m_shaders.emplace("stars", shader_program{{{GL_VERTEX_SHADER,m_resource_path + "shaders/vao.vert"}, {GL_FRAGMENT_SHADER, m_resource_path + "shaders/vao.frag"}}});      
   // request uniform locations for shader program   
-  //m_shaders.at("stars").u_locs["ModelViewMatrix"] = -1;   
-  //m_shaders.at("stars").u_locs["ProjectionMatrix"] = -1;
+  m_shaders.at("stars").u_locs["NormalMatrix"] = -1;
+  m_shaders.at("stars").u_locs["ModelViewMatrix"] = -1;   
+  m_shaders.at("stars").u_locs["ProjectionMatrix"] = -1;
+  m_shaders.at("stars").u_locs["ViewMatrix"] = -1;
 }
 
 // load models
