@@ -93,11 +93,6 @@ GLuint Node::getDepth() const {
 }
 
 glm::fmat4 Node::getLocalTransform() const {
-    /* if(parent_ == nullptr) {
-        return localtransform_;
-    } else {
-        return parent_->getWorldTransform() * localtransform_; 
-    } */
     return localtransform_;
 }
 
@@ -106,12 +101,11 @@ void Node::setLocalTransform(glm::fmat4 const& mat) {
 }
 
 glm::fmat4 Node::getWorldTransform() const {
-    /* if(parent_ == nullptr) {
-        return worldtransform_;
+    if(parent_ == nullptr) {
+        return localtransform_;
     } else {
         return parent_->getWorldTransform() * localtransform_;
-    } */
-    return worldtransform_;
+    } 
 }
 
 void Node::setWorldTransform(glm::fmat4 const& mat) {
