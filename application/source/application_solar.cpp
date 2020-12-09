@@ -57,12 +57,15 @@ void ApplicationSolar::initializeSceneGraph() {
   auto laFerrariHolder = std::make_shared<Node>(raum, "La Ferrari", "root->laFerrari", 1);
   //Connect Planet with root node
   raum->addChild(laFerrariHolder);
+  //Set Planet Position
   laFerrariHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 18.0f}));
+  //Set Planet Rotation Speed
   laFerrariHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 2.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * laFerrariHolder->getLocalTransform());
   //Create GeometryNode of Planet
   auto laFerrari = std::make_shared<GeometryNode>(laFerrariHolder, "La Ferrari Geometry");
   //Connect Geometry Node with Planet holder
   laFerrariHolder->addChild(laFerrari);
+  //Set size of planet
   laFerrari->setLocalTransform(glm::scale({}, glm::fvec3{0.41f, 0.41f, 0.41f}));
 
   
@@ -112,7 +115,6 @@ void ApplicationSolar::initializeSceneGraph() {
   lamborghiniVenenoHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 20.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * lamborghiniVenenoHolder->getLocalTransform());
   auto lamborghiniVeneno = std::make_shared<GeometryNode>(lamborghiniVenenoHolder, "Lamborghini Veneno Geometry");
   lamborghiniVenenoHolder->addChild(lamborghiniVeneno);
-  //Set size of planet
   lamborghiniVeneno->setLocalTransform(glm::scale({}, glm::fvec3{0.5f, 0.5f, 0.5f}));
 
   auto rollsRoycePhantomHolder = std::make_shared<Node>(raum, "Rolls Royce Phantom", "root->rollsRoycePhantom", 1);
