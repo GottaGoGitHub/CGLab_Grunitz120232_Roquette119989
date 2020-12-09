@@ -102,43 +102,43 @@ void ApplicationSolar::initializeSceneGraph() {
   //Das Zentrum des Universums, das Licht alles Lebens, die Sonne, ich
   auto ichHolder = std::make_shared<Node>(raum, "Ich", "root->ich", 1);
   raum->addChild(ichHolder);
-  ichHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 0.5f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-  ichHolder->setLocalTransform(glm::scale(ichHolder->getWorldTransform(), glm::fvec3{2.0f, 2.0f, 2.0f}));
   auto ich = std::make_shared<GeometryNode>(ichHolder, "Ich Geometry");
   ichHolder->addChild(ich);
-  ich->setWorldTransform(ichHolder->getWorldTransform());
+  ich->setLocalTransform(glm::scale({}, glm::fvec3{1.0f, 1.0f, 1.0f}));
 
   auto lamborghiniVenenoHolder = std::make_shared<Node>(raum, "Lamborghini Veneno", "root->lamborghiniVeneno", 1);
   raum->addChild(lamborghiniVenenoHolder);
-  lamborghiniVenenoHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 20.0f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-  lamborghiniVenenoHolder->setLocalTransform(glm::translate(lamborghiniVenenoHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 5.0f}));
+  //
+  lamborghiniVenenoHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 5.0f}));
+  lamborghiniVenenoHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 20.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * lamborghiniVenenoHolder->getLocalTransform());
   auto lamborghiniVeneno = std::make_shared<GeometryNode>(lamborghiniVenenoHolder, "Lamborghini Veneno Geometry");
   lamborghiniVenenoHolder->addChild(lamborghiniVeneno);
-  lamborghiniVeneno->setWorldTransform(lamborghiniVenenoHolder->getWorldTransform());
+  //Set size of planet
+  lamborghiniVeneno->setLocalTransform(glm::scale({}, glm::fvec3{0.5f, 0.5f, 0.5f}));
 
   auto rollsRoycePhantomHolder = std::make_shared<Node>(raum, "Rolls Royce Phantom", "root->rollsRoycePhantom", 1);
   raum->addChild(rollsRoycePhantomHolder);
-  rollsRoycePhantomHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 12.0f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-  rollsRoycePhantomHolder->setLocalTransform(glm::translate(rollsRoycePhantomHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 8.0f}));
+  rollsRoycePhantomHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 8.0f}));
+  rollsRoycePhantomHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 12.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * rollsRoycePhantomHolder->getLocalTransform());
   auto rollsRoycePhantom = std::make_shared<GeometryNode>(rollsRoycePhantomHolder, "Rolls Royce Phantom Geometry");
   rollsRoycePhantomHolder->addChild(rollsRoycePhantom);
-  rollsRoycePhantom->setWorldTransform(rollsRoycePhantomHolder->getWorldTransform());
+  rollsRoycePhantom->setLocalTransform(glm::scale({}, glm::fvec3{0.43f, 0.43f, 0.43f}));
 
   auto mercedesMaybachHolder = std::make_shared<Node>(raum, "Mercedes Maybach S650", "root->mercedesMaybach", 1);
   raum->addChild(mercedesMaybachHolder);
-  mercedesMaybachHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 5.5f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-  mercedesMaybachHolder->setLocalTransform(glm::translate(mercedesMaybachHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 12.0f}));
+  mercedesMaybachHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 12.0f}));
+  mercedesMaybachHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 5.5f, glm::fvec3{0.0f, 1.0f, 0.0f}) * mercedesMaybachHolder->getLocalTransform());
   auto mercedesMaybach = std::make_shared<GeometryNode>(mercedesMaybachHolder, "Mercedes Maybach S650 Geometry");
   mercedesMaybachHolder->addChild(mercedesMaybach);
-  mercedesMaybach->setWorldTransform(mercedesMaybachHolder->getWorldTransform());
+  mercedesMaybach->setLocalTransform(glm::scale({}, glm::fvec3{0.67f, 0.67f, 0.67f}));
   
   auto bentleyFlyingSpurHolder = std::make_shared<Node>(mercedesMaybachHolder, "Bentley Flying Spur", "root->bentleyFlyingSpur", 1);
   mercedesMaybachHolder->addChild(bentleyFlyingSpurHolder);
-  bentleyFlyingSpurHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 8.0f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-  bentleyFlyingSpurHolder->setLocalTransform(glm::translate(bentleyFlyingSpurHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 1.4f}));
+  bentleyFlyingSpurHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 1.4f}));
+  bentleyFlyingSpurHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 8.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * bentleyFlyingSpurHolder->getLocalTransform());
   auto bentleyFlyingSpur = std::make_shared<GeometryNode>(bentleyFlyingSpurHolder, "Bentley Flying Spur Geometry");
   bentleyFlyingSpurHolder->addChild(bentleyFlyingSpur);
-  bentleyFlyingSpur->setWorldTransform(bentleyFlyingSpurHolder->getWorldTransform());
+  bentleyFlyingSpur->setLocalTransform(glm::scale({}, glm::fvec3{0.1f, 0.1f, 0.1f}));
   
 
   //Add all Geometry Node to the List
@@ -222,16 +222,17 @@ void ApplicationSolar::render() const {
 
 void ApplicationSolar::renderPlanets() const {
 
+  int count = 0;
+
   model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL);
 
-  glm::fmat4 roation_matrix = glm::rotate(glm::fmat4{}, 0.0005f + float(10) * 0.0001f, glm::fvec3{0, 1, 0});
+  glm::fmat4 roation_matrix = glm::rotate(glm::fmat4{}, float(count - (glfwGetTime()) * 0.0005f), glm::fvec3{0, 1, 0});
 
   for(auto& planet : geomList) {
+
     auto holder = planet->getParent();
     planet->setGeometry(planet_model);
-
     holder->setLocalTransform(roation_matrix * holder->getLocalTransform());
-
 
     glUseProgram(m_shaders.at("planet").handle);
 
@@ -239,6 +240,7 @@ void ApplicationSolar::renderPlanets() const {
                           1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
 
     planet->setLocalTransform(roation_matrix * planet->getLocalTransform());
+
     // extra matrix for normal transformation to keep them orthogonal to surface
     glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
                           1, GL_FALSE, glm::value_ptr(glm::inverseTranspose(glm::inverse(m_view_transform) * planet->getWorldTransform())));
@@ -248,6 +250,8 @@ void ApplicationSolar::renderPlanets() const {
 
     // draw bound vertex array using bound shader
     glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
+
+    count++;
   }   
 }
 
