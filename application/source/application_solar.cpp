@@ -49,7 +49,7 @@ void ApplicationSolar::initializeSceneGraph() {
   //Initialize Scenegraph with root node
   Scenegraph solar_system("Solarium", raum);
 
-  /*
+  
   //create node for all stars in the scene
   auto star_container = std::make_shared<Node>(raum, "stars");
   raum->addChild(star_container);
@@ -57,47 +57,47 @@ void ApplicationSolar::initializeSceneGraph() {
   auto laFerrariHolder = std::make_shared<Node>(raum, "La Ferrari", "root->laFerrari", 1);
   //Connect Planet with root node
   raum->addChild(laFerrariHolder);
-  laFerrariHolder->setWorldTransform(glm::rotate(glm::fmat4{}, 2.0f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-  laFerrariHolder->setWorldTransform(glm::translate(laFerrariHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 23.0f}));
+  laFerrariHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 18.0f}));
+  laFerrariHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 2.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * laFerrariHolder->getLocalTransform());
   //Create GeometryNode of Planet
   auto laFerrari = std::make_shared<GeometryNode>(laFerrariHolder, "La Ferrari Geometry");
   //Connect Geometry Node with Planet holder
   laFerrariHolder->addChild(laFerrari);
-  laFerrari->setWorldTransform(laFerrariHolder->getWorldTransform());
+  laFerrari->setLocalTransform(glm::scale({}, glm::fvec3{0.41f, 0.41f, 0.41f}));
 
   
   auto astonMartinOneHolder = std::make_shared<Node>(raum, "Aston Martin One-77", "root->astonMartinOne", 1);
   raum->addChild(astonMartinOneHolder);
-  astonMartinOneHolder->setWorldTransform(glm::rotate(glm::fmat4{}, 1.0f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-  astonMartinOneHolder->setWorldTransform(glm::translate(astonMartinOneHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 3.0f}));
+  astonMartinOneHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 6.5f}));
+  astonMartinOneHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 1.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * astonMartinOneHolder->getLocalTransform());
   auto astonMartinOne = std::make_shared<GeometryNode>(astonMartinOneHolder, "Aston Martin One-77 Geometry");
   astonMartinOneHolder->addChild(astonMartinOne);
-  astonMartinOne->setWorldTransform(astonMartinOneHolder->getWorldTransform());
+  astonMartinOne->setLocalTransform(glm::scale({}, glm::fvec3{0.57f, 0.57f, 0.57f}));
 
   auto koenigsEggOneHolder = std::make_shared<Node>(raum, "Koenigsegg One", "root->koenigsEggOne", 1);
   raum->addChild(koenigsEggOneHolder);
-  koenigsEggOneHolder->setWorldTransform(glm::rotate(glm::fmat4{}, 3.8f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-  koenigsEggOneHolder->setWorldTransform(glm::translate(koenigsEggOneHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 5.0f}));
+  koenigsEggOneHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 3.0f}));
+  koenigsEggOneHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 3.8f, glm::fvec3{0.0f, 1.0f, 0.0f}) * koenigsEggOneHolder->getLocalTransform());
   auto koenigsEggOne = std::make_shared<GeometryNode>(koenigsEggOneHolder, "Koenigsegg One Geometry");
   koenigsEggOneHolder->addChild(koenigsEggOne);
-  koenigsEggOne->setWorldTransform(koenigsEggOneHolder->getWorldTransform());
+  koenigsEggOne->setLocalTransform(glm::scale({}, glm::fvec3{0.66f, 0.66f, 0.66f}));
 
   auto ferrariFAmericaHolder = std::make_shared<Node>(raum, "Ferrari F60 America", "root->ferrariFAmerica", 1);
   raum->addChild(ferrariFAmericaHolder);
-  ferrariFAmericaHolder->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*0.6f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-  ferrariFAmericaHolder->setWorldTransform(glm::translate(ferrariFAmericaHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 8.0f}));
+  ferrariFAmericaHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 9.0f}));
+  ferrariFAmericaHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 13.8f, glm::fvec3{0.0f, 1.0f, 0.0f}) * ferrariFAmericaHolder->getLocalTransform());
   auto ferrariFAmerica = std::make_shared<GeometryNode>(ferrariFAmericaHolder, "Ferrari F60 America Geometry");
   ferrariFAmericaHolder->addChild(ferrariFAmerica);
-  ferrariFAmerica->setWorldTransform(ferrariFAmericaHolder->getWorldTransform());
+  ferrariFAmerica->setLocalTransform(glm::scale({}, glm::fvec3{0.32f, 0.32f, 0.32f}));
 
   auto bugattiVeyronHolder = std::make_shared<Node>(raum, "Mansory Vivere Bugatti Veyron", "root->bugattiVeyron", 1);
   raum->addChild(bugattiVeyronHolder);
-  bugattiVeyronHolder->setWorldTransform(glm::rotate(glm::fmat4{}, float(glfwGetTime())*0.5f, glm::fvec3{0.0f, 1.0f, 0.0f}));
-  bugattiVeyronHolder->setWorldTransform(glm::translate(bugattiVeyronHolder->getWorldTransform(), glm::fvec3{0.0f, 0.0f, 11.0f}));
+  bugattiVeyronHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 11.0f}));
+  bugattiVeyronHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 17.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * bugattiVeyronHolder->getLocalTransform());
   auto bugattiVeyron = std::make_shared<GeometryNode>(bugattiVeyronHolder, "Mansory Vivere Bugatti Veyron Geometry");
   bugattiVeyronHolder->addChild(bugattiVeyron);
-  bugattiVeyron->setWorldTransform(bugattiVeyronHolder->getWorldTransform());
-  */
+  bugattiVeyron->setLocalTransform(glm::scale({}, glm::fvec3{0.78f, 0.78f, 0.78f}));
+  
   
   //Das Zentrum des Universums, das Licht alles Lebens, die Sonne, ich
   auto ichHolder = std::make_shared<Node>(raum, "Ich", "root->ich", 1);
@@ -108,7 +108,6 @@ void ApplicationSolar::initializeSceneGraph() {
 
   auto lamborghiniVenenoHolder = std::make_shared<Node>(raum, "Lamborghini Veneno", "root->lamborghiniVeneno", 1);
   raum->addChild(lamborghiniVenenoHolder);
-  //
   lamborghiniVenenoHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 5.0f}));
   lamborghiniVenenoHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 20.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * lamborghiniVenenoHolder->getLocalTransform());
   auto lamborghiniVeneno = std::make_shared<GeometryNode>(lamborghiniVenenoHolder, "Lamborghini Veneno Geometry");
@@ -126,7 +125,7 @@ void ApplicationSolar::initializeSceneGraph() {
 
   auto mercedesMaybachHolder = std::make_shared<Node>(raum, "Mercedes Maybach S650", "root->mercedesMaybach", 1);
   raum->addChild(mercedesMaybachHolder);
-  mercedesMaybachHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 12.0f}));
+  mercedesMaybachHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 14.0f}));
   mercedesMaybachHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 5.5f, glm::fvec3{0.0f, 1.0f, 0.0f}) * mercedesMaybachHolder->getLocalTransform());
   auto mercedesMaybach = std::make_shared<GeometryNode>(mercedesMaybachHolder, "Mercedes Maybach S650 Geometry");
   mercedesMaybachHolder->addChild(mercedesMaybach);
@@ -142,12 +141,11 @@ void ApplicationSolar::initializeSceneGraph() {
   
 
   //Add all Geometry Node to the List
-  /* 
   geomList.push_back(laFerrari);
   geomList.push_back(astonMartinOne);
   geomList.push_back(koenigsEggOne);
   geomList.push_back(ferrariFAmerica);
-  geomList.push_back(bugattiVeyron); */
+  geomList.push_back(bugattiVeyron); 
   geomList.push_back(ich);
   geomList.push_back(lamborghiniVeneno);
   geomList.push_back(rollsRoycePhantom);
@@ -226,9 +224,9 @@ void ApplicationSolar::renderPlanets() const {
 
   model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL);
 
-  glm::fmat4 roation_matrix = glm::rotate(glm::fmat4{}, float(count - (glfwGetTime()) * 0.0005f), glm::fvec3{0, 1, 0});
 
   for(auto& planet : geomList) {
+    glm::fmat4 roation_matrix = glm::rotate(glm::fmat4{}, float(((20 - count) * 0.0005f)), glm::fvec3{0, 1, 0});
 
     auto holder = planet->getParent();
     planet->setGeometry(planet_model);
