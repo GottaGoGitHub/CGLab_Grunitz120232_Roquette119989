@@ -62,7 +62,7 @@ void ApplicationSolar::initializeSceneGraph() {
   //Set Planet Rotation Speed
   laFerrariHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 2.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * laFerrariHolder->getLocalTransform());
   //Create GeometryNode of Planet
-  auto laFerrari = std::make_shared<GeometryNode>(laFerrariHolder, "La Ferrari Geometry");
+  auto laFerrari = std::make_shared<GeometryNode>(laFerrariHolder, "LaFerrari_geometry");
   //Connect Geometry Node with Planet holder
   laFerrariHolder->addChild(laFerrari);
   //Set size of planet
@@ -73,7 +73,7 @@ void ApplicationSolar::initializeSceneGraph() {
   raum->addChild(astonMartinOneHolder);
   astonMartinOneHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 6.5f}));
   astonMartinOneHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 1.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * astonMartinOneHolder->getLocalTransform());
-  auto astonMartinOne = std::make_shared<GeometryNode>(astonMartinOneHolder, "Aston Martin One-77 Geometry");
+  auto astonMartinOne = std::make_shared<GeometryNode>(astonMartinOneHolder, "AstonMartin_177_geometry");
   astonMartinOneHolder->addChild(astonMartinOne);
   astonMartinOne->setLocalTransform(glm::scale({}, glm::fvec3{0.57f, 0.57f, 0.57f}));
 
@@ -81,7 +81,7 @@ void ApplicationSolar::initializeSceneGraph() {
   raum->addChild(koenigsEggOneHolder);
   koenigsEggOneHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 3.0f}));
   koenigsEggOneHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 3.8f, glm::fvec3{0.0f, 1.0f, 0.0f}) * koenigsEggOneHolder->getLocalTransform());
-  auto koenigsEggOne = std::make_shared<GeometryNode>(koenigsEggOneHolder, "Koenigsegg One Geometry");
+  auto koenigsEggOne = std::make_shared<GeometryNode>(koenigsEggOneHolder, "Koenigsegg_One_geometry");
   koenigsEggOneHolder->addChild(koenigsEggOne);
   koenigsEggOne->setLocalTransform(glm::scale({}, glm::fvec3{0.66f, 0.66f, 0.66f}));
 
@@ -89,7 +89,7 @@ void ApplicationSolar::initializeSceneGraph() {
   raum->addChild(ferrariFAmericaHolder);
   ferrariFAmericaHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 9.0f}));
   ferrariFAmericaHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 13.8f, glm::fvec3{0.0f, 1.0f, 0.0f}) * ferrariFAmericaHolder->getLocalTransform());
-  auto ferrariFAmerica = std::make_shared<GeometryNode>(ferrariFAmericaHolder, "Ferrari F60 America Geometry");
+  auto ferrariFAmerica = std::make_shared<GeometryNode>(ferrariFAmericaHolder, "Ferrari_F60A_geometry");
   ferrariFAmericaHolder->addChild(ferrariFAmerica);
   ferrariFAmerica->setLocalTransform(glm::scale({}, glm::fvec3{0.32f, 0.32f, 0.32f}));
 
@@ -97,15 +97,14 @@ void ApplicationSolar::initializeSceneGraph() {
   raum->addChild(bugattiVeyronHolder);
   bugattiVeyronHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 11.0f}));
   bugattiVeyronHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 17.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * bugattiVeyronHolder->getLocalTransform());
-  auto bugattiVeyron = std::make_shared<GeometryNode>(bugattiVeyronHolder, "Mansory Vivere Bugatti Veyron Geometry");
+  auto bugattiVeyron = std::make_shared<GeometryNode>(bugattiVeyronHolder, "MS_Bugatti_V_geometry");
   bugattiVeyronHolder->addChild(bugattiVeyron);
   bugattiVeyron->setLocalTransform(glm::scale({}, glm::fvec3{0.78f, 0.78f, 0.78f}));
-  
   
   //Das Zentrum des Universums, das Licht alles Lebens, die Sonne, ich
   auto ichHolder = std::make_shared<Node>(raum, "Ich", "root->ich", 1);
   raum->addChild(ichHolder);
-  auto ich = std::make_shared<GeometryNode>(ichHolder, "Ich Geometry");
+  auto ich = std::make_shared<GeometryNode>(ichHolder, "Ich_geometry");
   ichHolder->addChild(ich);
   ich->setLocalTransform(glm::scale({}, glm::fvec3{1.0f, 1.0f, 1.0f}));
 
@@ -113,7 +112,7 @@ void ApplicationSolar::initializeSceneGraph() {
   raum->addChild(lamborghiniVenenoHolder);
   lamborghiniVenenoHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 5.0f}));
   lamborghiniVenenoHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 20.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * lamborghiniVenenoHolder->getLocalTransform());
-  auto lamborghiniVeneno = std::make_shared<GeometryNode>(lamborghiniVenenoHolder, "Lamborghini Veneno Geometry");
+  auto lamborghiniVeneno = std::make_shared<GeometryNode>(lamborghiniVenenoHolder, "Lamborghini_V_geometry");
   lamborghiniVenenoHolder->addChild(lamborghiniVeneno);
   lamborghiniVeneno->setLocalTransform(glm::scale({}, glm::fvec3{0.5f, 0.5f, 0.5f}));
 
@@ -121,7 +120,7 @@ void ApplicationSolar::initializeSceneGraph() {
   raum->addChild(rollsRoycePhantomHolder);
   rollsRoycePhantomHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 8.0f}));
   rollsRoycePhantomHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 12.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * rollsRoycePhantomHolder->getLocalTransform());
-  auto rollsRoycePhantom = std::make_shared<GeometryNode>(rollsRoycePhantomHolder, "Rolls Royce Phantom Geometry");
+  auto rollsRoycePhantom = std::make_shared<GeometryNode>(rollsRoycePhantomHolder, "RollsRoyce_P_geometry");
   rollsRoycePhantomHolder->addChild(rollsRoycePhantom);
   rollsRoycePhantom->setLocalTransform(glm::scale({}, glm::fvec3{0.43f, 0.43f, 0.43f}));
 
@@ -129,15 +128,16 @@ void ApplicationSolar::initializeSceneGraph() {
   raum->addChild(mercedesMaybachHolder);
   mercedesMaybachHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 14.0f}));
   mercedesMaybachHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 5.5f, glm::fvec3{0.0f, 1.0f, 0.0f}) * mercedesMaybachHolder->getLocalTransform());
-  auto mercedesMaybach = std::make_shared<GeometryNode>(mercedesMaybachHolder, "Mercedes Maybach S650 Geometry");
+  auto mercedesMaybach = std::make_shared<GeometryNode>(mercedesMaybachHolder, "Mercedes_MS650_geometry");
   mercedesMaybachHolder->addChild(mercedesMaybach);
   mercedesMaybach->setLocalTransform(glm::scale({}, glm::fvec3{0.67f, 0.67f, 0.67f}));
-  
-  auto bentleyFlyingSpurHolder = std::make_shared<Node>(mercedesMaybachHolder, "Bentley Flying Spur", "root->bentleyFlyingSpur", 1);
+
+  //Moon of mercedes maybach
+  auto bentleyFlyingSpurHolder = std::make_shared<Node>(mercedesMaybachHolder, "Bentley Flying Spur", "mercedesMaybach->bentleyFlyingSpur", 1);
   mercedesMaybachHolder->addChild(bentleyFlyingSpurHolder);
   bentleyFlyingSpurHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 1.4f}));
   bentleyFlyingSpurHolder->setLocalTransform(glm::rotate(glm::fmat4{}, 8.0f, glm::fvec3{0.0f, 1.0f, 0.0f}) * bentleyFlyingSpurHolder->getLocalTransform());
-  auto bentleyFlyingSpur = std::make_shared<GeometryNode>(bentleyFlyingSpurHolder, "Bentley Flying Spur Geometry");
+  auto bentleyFlyingSpur = std::make_shared<GeometryNode>(bentleyFlyingSpurHolder, "Bentley_FS_geometry");
   bentleyFlyingSpurHolder->addChild(bentleyFlyingSpur);
   bentleyFlyingSpur->setLocalTransform(glm::scale({}, glm::fvec3{0.1f, 0.1f, 0.1f}));
   
@@ -153,12 +153,11 @@ void ApplicationSolar::initializeSceneGraph() {
   geomList.push_back(rollsRoycePhantom);
   geomList.push_back(mercedesMaybach);
   geomList.push_back(bentleyFlyingSpur);
-  
-
 }
 
 void ApplicationSolar::initializeStars(){
 
+  //Create interleaved vec with 10000 stars x,y,z,r,g,b
   int const amount = 10000;
   std::vector<float> stars;
   for(int i = 0; i < amount; i++){
@@ -178,7 +177,7 @@ void ApplicationSolar::initializeStars(){
     stars.push_back(b);
   }
 
-    // generate vertex array object
+  // generate vertex array object
   glGenVertexArrays(1, &star_object.vertex_AO);
   // bind the array for attaching buffers
   glBindVertexArray(star_object.vertex_AO);
@@ -194,10 +193,9 @@ void ApplicationSolar::initializeStars(){
   glEnableVertexAttribArray(0);
   // first attribute is 3 floats with no offset & stride
 
-  //!!!
+  // index, size, type, normalized (fixed-point data - YES/NO), stride (offset), pointer (offset to the first component of the first generic vertex attribute in the array)
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, GLsizei(6*sizeof(float)), 0);
   //!!!
-
 
   // activate second attribute on gpu
   glEnableVertexAttribArray(1);
@@ -222,24 +220,37 @@ void ApplicationSolar::render() const {
 
 void ApplicationSolar::renderPlanets() const {
 
+  //init counter to have each planet different from another
   int count = 0;
-
+  //Load planet_model into function
   model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL);
 
-
+  //Iterate over all Planets added to geomList
   for(auto& planet : geomList) {
-    glm::fmat4 roation_matrix = glm::rotate(glm::fmat4{}, float(((20 - count) * 0.0005f)), glm::fvec3{0, 1, 0});
-
     auto holder = planet->getParent();
+    
+    //init rotation matrix
+    glm::fmat4 rotation_matrix;
+    
+    //Set different rotation matrix for Moon (Bentley)
+    if(planet->getName() != "Bentley_FS_geometry") {
+      rotation_matrix = glm::rotate(glm::fmat4{}, float(((20 - (count * 2)) * 0.0005f)), glm::fvec3{0, 1, 0});
+    } else {
+      rotation_matrix = glm::rotate(glm::fmat4{}, 0.05f, glm::fvec3{0, 1, 0});
+    }
+
+    //Set Geometry of Planet
     planet->setGeometry(planet_model);
-    holder->setLocalTransform(roation_matrix * holder->getLocalTransform());
+
+    //Set Localtransform of holder w "custom" matrix
+    holder->setLocalTransform(rotation_matrix * holder->getLocalTransform());
 
     glUseProgram(m_shaders.at("planet").handle);
 
     glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("ModelMatrix"),
                           1, GL_FALSE, glm::value_ptr(planet->getWorldTransform()));
 
-    planet->setLocalTransform(roation_matrix * planet->getLocalTransform());
+    planet->setLocalTransform(rotation_matrix * planet->getLocalTransform());
 
     // extra matrix for normal transformation to keep them orthogonal to surface
     glUniformMatrix4fv(m_shaders.at("planet").u_locs.at("NormalMatrix"),
@@ -338,6 +349,14 @@ void ApplicationSolar::initializeGeometry() {
   // configure currently bound array buffer
   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * planet_model.data.size(), planet_model.data.data(), GL_STATIC_DRAW);
 
+  /*
+
+  planet_model.data.data(): A pointer to the data in system memory that will be copied to the data store during initialization 
+
+  GL_STATIC_DRAW: Specifies that the data store contents will be modified once by the application and drawn many times
+  
+  */
+
   // activate first attribute on gpu
   glEnableVertexAttribArray(0);
   // first attribute is 3 floats with no offset & stride
@@ -364,19 +383,19 @@ void ApplicationSolar::initializeGeometry() {
 // handle key input
 void ApplicationSolar::keyCallback(int key, int action, int mods) {
   if (key == GLFW_KEY_W  && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
-    m_view_transform = glm::translate(m_view_transform, glm::fvec3{0.0f, 0.0f, -0.1f});
+    m_view_transform = glm::translate(m_view_transform, glm::fvec3{0.0f, 0.0f, -0.2f});
     uploadView();
   }
   else if (key == GLFW_KEY_S  && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
-    m_view_transform = glm::translate(m_view_transform, glm::fvec3{0.0f, 0.0f, 0.1f});
+    m_view_transform = glm::translate(m_view_transform, glm::fvec3{0.0f, 0.0f, 0.2f});
     uploadView();
   }
   else if (key == GLFW_KEY_A  && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
-    m_view_transform = glm::translate(m_view_transform, glm::fvec3{-0.1f, 0.0f, 0.0f});
+    m_view_transform = glm::translate(m_view_transform, glm::fvec3{-0.2f, 0.0f, 0.0f});
     uploadView();
   }
   else if (key == GLFW_KEY_D  && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
-    m_view_transform = glm::translate(m_view_transform, glm::fvec3{0.1f, 0.0f, 0.f});
+    m_view_transform = glm::translate(m_view_transform, glm::fvec3{0.2f, 0.0f, 0.f});
     uploadView();
   }
 }
@@ -384,8 +403,19 @@ void ApplicationSolar::keyCallback(int key, int action, int mods) {
 //handle delta mouse movement input
 void ApplicationSolar::mouseCallback(double pos_x, double pos_y) {
   // mouse handling
-  m_view_transform = glm::rotate(m_view_transform, glm::radians(-(float)pos_x), glm::vec3{0.0f, 1.0f, 0.0f});
-  m_view_transform = glm::rotate(m_view_transform, glm::radians(-(float)pos_y), glm::vec3{1.0f, 0.0f, 0.0f});
+
+  float x = pos_x;
+  float y = pos_y;
+
+  float sens = 0.1f;
+  x *= sens;
+  y *= sens;
+
+  m_view_transform = glm::rotate(m_view_transform, glm::radians(-(float)x), glm::vec3{0.0f, 1.0f, 0.0f});
+  m_view_transform = glm::rotate(m_view_transform, glm::radians(-(float)y), glm::vec3{1.0f, 0.0f, 0.0f});
+
+  
+  
   uploadView();
 }
 
