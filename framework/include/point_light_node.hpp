@@ -15,8 +15,8 @@ public:
     PointLightNode(float intensity, glm::vec3 color);
 
 private:
-    float lightIntensity;
-    glm::vec3 lightColor;
+    float lightIntensity_;
+    glm::vec3 lightColor_;
 
 };
 
