@@ -259,6 +259,10 @@ void ApplicationSolar::renderPlanets() const {
     // bind the VAO to draw
     glBindVertexArray(planet_object.vertex_AO);
 
+
+    GLuint colorLocation = glGetUniformLocation(m_shaders.at("planet").handle, "planetColor");
+    glUniform3f(colorLocation, 1.0f, 1.0f, 1.0f);
+
     // draw bound vertex array using bound shader
     glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);
 
@@ -327,10 +331,10 @@ void ApplicationSolar::initializeShaderPrograms() {
   // store star shader   
   m_shaders.emplace("stars", shader_program{{{GL_VERTEX_SHADER,m_resource_path + "shaders/vao.vert"}, {GL_FRAGMENT_SHADER, m_resource_path + "shaders/vao.frag"}}});      
   // request uniform locations for shader program   
-  m_shaders.at("stars").u_locs["NormalMatrix"] = -1;
+  //m_shaders.at("stars").u_locs["NormalMatrix"] = -1;
   m_shaders.at("stars").u_locs["ModelViewMatrix"] = -1;   
   m_shaders.at("stars").u_locs["ProjectionMatrix"] = -1;
-  m_shaders.at("stars").u_locs["ViewMatrix"] = -1;
+  //m_shaders.at("stars").u_locs["ViewMatrix"] = -1;
 }
 
 // load models
