@@ -51,6 +51,7 @@ class ApplicationSolar : public Application {
   std::shared_ptr<Node> raum_;
 
   std::vector<std::shared_ptr<GeometryNode>> geomList;
+  std::map<std::string, glm::vec3> colors;
   
   // camera transform matrix
   glm::fmat4 m_view_transform;
