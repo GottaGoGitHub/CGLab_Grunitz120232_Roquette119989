@@ -7,6 +7,7 @@
 class CameraNode : public Node {
 public:
     CameraNode();
+    CameraNode(std::shared_ptr<Node> const& parent, std::string const& name, bool pers, bool enabled, glm::fmat4 const& projMat);
     ~CameraNode();
 
     bool getPerspective() const;
@@ -18,9 +19,9 @@ public:
     void setProjectionMatrix(glm::fmat4 const& mat);
 
 private:
-    bool isPerspective;
-    bool isEnabled;
-    glm::fmat4 projectionMatrix;
+    bool isPerspective_;
+    bool isEnabled_;
+    glm::fmat4 projectionMatrix_;
 };
 
 #endif //CAMERA_NODE_HPP

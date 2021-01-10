@@ -7,6 +7,8 @@
 #include "application.hpp"
 #include "model.hpp"
 #include "structs.hpp"
+#include "point_light_node.hpp"
+#include "camera_node.hpp"
 
 // gpu representation of model
 class ApplicationSolar : public Application {
@@ -37,6 +39,7 @@ class ApplicationSolar : public Application {
   void initializeShaderPrograms();
   void initializeGeometry();
   void initializeStars();
+  void initializeLights();
   // update uniform values
   void uploadUniforms();
   // upload projection matrix
@@ -52,6 +55,7 @@ class ApplicationSolar : public Application {
 
   std::vector<std::shared_ptr<GeometryNode>> geomList;
   std::map<std::string, glm::vec3> colors;
+  std::list<std::shared_ptr<PointLightNode>> lightList;
   
   // camera transform matrix
   glm::fmat4 m_view_transform;

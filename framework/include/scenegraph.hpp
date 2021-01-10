@@ -2,7 +2,9 @@
 #define SCENEGRAPH_HPP
 
 #include "node.hpp"
+#include "point_light_node.hpp"
 #include <string>
+#include <list>
 
 struct Scenegraph {
 public:
@@ -18,10 +20,15 @@ public:
 
     std::string printGraph() const;
 
+    void addLightNode(std::shared_ptr<PointLightNode> const& light);
+    std::list<std::shared_ptr<PointLightNode>> getAllLights();
+
 private:
     std::string name_;
     std::shared_ptr<Node> root_; 
 
+protected:
+    std::list<std::shared_ptr<PointLightNode>> lightNodes_;
 };
 
 #endif //SCENEGRAPH_HPP

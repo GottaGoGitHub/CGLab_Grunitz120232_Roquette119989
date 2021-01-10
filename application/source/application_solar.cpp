@@ -30,6 +30,7 @@ ApplicationSolar::ApplicationSolar(std::string const& resource_path)
   initializeStars();
   initializeGeometry();
   initializeShaderPrograms();
+  initializeLights();
 }
 
 ApplicationSolar::~ApplicationSolar() {
@@ -49,10 +50,23 @@ void ApplicationSolar::initializeSceneGraph() {
   //Initialize Scenegraph with root node
   Scenegraph solar_system("Solarium", raum);
 
-  
+  //light
+  auto light = std::make_shared<PointLightNode>(raum, "lightSource", 1.0f, glm::vec3{1.0f, 1.0f, 1.0f}, glm::vec3{0.0f, 0.0f, 0.0f});
+  raum->addChild(light);
+
+  //cam
+  auto camera = std::make_shared<CameraNode>(raum, "cam", true, true, glm::fmat4{});
+  raum->addChild(camera);
+
+  //Das Zentrum des Universums, das Licht alles Lebens, die Sonne, ich
+  auto ich = std::make_shared<GeometryNode>(light, "ich_geom");
+  light->addChild(ich);
+  ich->setLocalTransform(glm::scale({}, glm::fvec3{1.0f, 1.0f, 1.0f}));
+
   //create node for all stars in the scene
   auto star_container = std::make_shared<Node>(raum, "stars");
   raum->addChild(star_container);
+
   //Create Planet holder
   auto laFerrariHolder = std::make_shared<Node>(raum, "laFerrari", "root->laFerrari", 1);
   //Connect Planet with root node
@@ -68,7 +82,6 @@ void ApplicationSolar::initializeSceneGraph() {
   //Set size of planet
   laFerrari->setLocalTransform(glm::scale({}, glm::fvec3{0.41f, 0.41f, 0.41f}));
 
-  
   auto astonMartinOneHolder = std::make_shared<Node>(raum, "astonMartinOne", "root->astonMartinOne", 1);
   raum->addChild(astonMartinOneHolder);
   astonMartinOneHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 6.5f}));
@@ -101,13 +114,6 @@ void ApplicationSolar::initializeSceneGraph() {
   bugattiVeyronHolder->addChild(bugattiVeyron);
   bugattiVeyron->setLocalTransform(glm::scale({}, glm::fvec3{0.78f, 0.78f, 0.78f}));
   
-  //Das Zentrum des Universums, das Licht alles Lebens, die Sonne, ich
-  auto ichHolder = std::make_shared<Node>(raum, "ichHolder", "root->ich", 1);
-  raum->addChild(ichHolder);
-  auto ich = std::make_shared<GeometryNode>(ichHolder, "ich_geom");
-  ichHolder->addChild(ich);
-  ich->setLocalTransform(glm::scale({}, glm::fvec3{1.0f, 1.0f, 1.0f}));
-
   auto lamborghiniVenenoHolder = std::make_shared<Node>(raum, "lamborghiniVeneno", "root->lamborghiniVeneno", 1);
   raum->addChild(lamborghiniVenenoHolder);
   lamborghiniVenenoHolder->setLocalTransform(glm::translate({}, glm::fvec3{0.0f, 0.0f, 5.0f}));
@@ -177,6 +183,7 @@ void ApplicationSolar::initializeSceneGraph() {
   colors.insert({"mercedesMaybach", grey});
   colors.insert({"bentleyFlyingSpur", orange});
 
+  lightList.push_back(light);
 }
 
 void ApplicationSolar::initializeStars(){
@@ -237,6 +244,21 @@ void ApplicationSolar::initializeStars(){
 
 }
 
+void ApplicationSolar::initializeLights() {
+  for(auto lights : lightList){
+
+    auto intensity = glGetUniformLocation(m_shaders.at("planet").handle, "lightIntensity");
+    glUniform1f(intensity, lights->getIntensity());
+
+    auto color = glGetUniformLocation(m_shaders.at("planet").handle, "lightColor");
+    glUniform3f(color, lights->getColor()[0], lights->getColor()[1], lights->getColor()[2]);
+
+    auto position = glGetUniformLocation(m_shaders.at("planet").handle, "lightPos");
+    glUniform3f(position, lights->getPosition()[0], lights->getPosition()[1], lights->getPosition()[2]);
+
+  }
+}
+
 void ApplicationSolar::render() const {
   renderPlanets();
   renderStars();
@@ -251,6 +273,7 @@ void ApplicationSolar::renderPlanets() const {
 
   //Iterate over all Planets added to geomList
   for(auto& planet : geomList) {
+    std::string planet_name = planet->getName();
     auto holder = planet->getParent();
     
     //init rotation matrix
@@ -284,8 +307,9 @@ void ApplicationSolar::renderPlanets() const {
     glBindVertexArray(planet_object.vertex_AO);
 
 
-    GLuint colorLocation = glGetUniformLocation(m_shaders.at("planet").handle, "planetColor");
-    glUniform3f(colorLocation, 1.0f, 1.0f, 1.0f);
+    auto colorLocation = glGetUniformLocation(m_shaders.at("planet").handle, "planetColor");
+    auto color = colors.find(planet_name);
+    glUniform3f(colorLocation, color->second.x, color->second.x, color->second.x);
 
     // draw bound vertex array using bound shader
     glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);

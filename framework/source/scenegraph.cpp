@@ -36,3 +36,10 @@ std::string Scenegraph::printGraph() const {
     
 }
 
+void Scenegraph::addLightNode(std::shared_ptr<PointLightNode> const& light){
+    lightNodes_.push_back(light);
+}
+
+std::list<std::shared_ptr<PointLightNode>> Scenegraph::getAllLights(){
+    return lightNodes_;
+}
