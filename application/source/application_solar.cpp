@@ -30,7 +30,6 @@ ApplicationSolar::ApplicationSolar(std::string const& resource_path)
   initializeStars();
   initializeGeometry();
   initializeShaderPrograms();
-  initializeLights();
 }
 
 ApplicationSolar::~ApplicationSolar() {
@@ -48,7 +47,7 @@ void ApplicationSolar::initializeSceneGraph() {
   auto raum = std::make_shared<Node>(nullptr, "root");
   raum_ = raum;
   //Initialize Scenegraph with root node
-  Scenegraph solar_system("Solarium", raum);
+  scenegraph_ = Scenegraph{"Solarium", raum};
 
   //light
   auto light = std::make_shared<PointLightNode>(raum, "lightSource", 1.0f, glm::vec3{1.0f, 1.0f, 1.0f}, glm::vec3{0.0f, 0.0f, 0.0f});
@@ -243,8 +242,8 @@ void ApplicationSolar::initializeStars(){
   star_object.num_elements = GLsizei(amount);
 
 }
-
-void ApplicationSolar::initializeLights() {
+/*
+void ApplicationSolar::initializeLights(){
   for(auto lights : lightList){
 
     auto intensity = glGetUniformLocation(m_shaders.at("planet").handle, "lightIntensity");
@@ -257,7 +256,7 @@ void ApplicationSolar::initializeLights() {
     glUniform3f(position, lights->getPosition()[0], lights->getPosition()[1], lights->getPosition()[2]);
 
   }
-}
+}*/
 
 void ApplicationSolar::render() const {
   renderPlanets();
@@ -265,7 +264,7 @@ void ApplicationSolar::render() const {
 }
 
 void ApplicationSolar::renderPlanets() const {
-
+  auto root = scenegraph_.getRoot();
   //init counter to have each planet different from another
   int count = 0;
   //Load planet_model into function
@@ -305,11 +304,27 @@ void ApplicationSolar::renderPlanets() const {
 
     // bind the VAO to draw
     glBindVertexArray(planet_object.vertex_AO);
-
-
+        
     auto colorLocation = glGetUniformLocation(m_shaders.at("planet").handle, "planetColor");
     auto color = colors.find(planet_name);
     glUniform3f(colorLocation, color->second.x, color->second.x, color->second.x);
+
+    //update point light
+    auto light_node = root->getChildren("lightSource");
+    auto light = std::static_pointer_cast<PointLightNode>(light_node);
+    glm::vec3 light_color = light->getColor();
+    float light_intensity = light->getIntensity();
+    glm::fvec4 light_position = light->getWorldTransform()*glm::fvec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+    auto lightPositionLocation = glGetUniformLocation(m_shaders.at("planet").handle, "lightPos");
+    glUniform3f(lightPositionLocation, light_position.x, light_position.y, light_position.z);
+
+    auto lightColorLocation = glGetUniformLocation(m_shaders.at("planet").handle, "lightColor");
+    glUniform3f(lightColorLocation, light_color.x, light_color.y, light_color.z);
+
+    auto lightIntensityLocation = glGetUniformLocation(m_shaders.at("planet").handle, "lightIntensity");
+    glUniform1f(lightIntensityLocation, light_intensity);
+
 
     // draw bound vertex array using bound shader
     glDrawElements(planet_object.draw_mode, planet_object.num_elements, model::INDEX.type, NULL);

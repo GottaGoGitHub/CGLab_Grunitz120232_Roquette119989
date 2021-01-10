@@ -39,7 +39,8 @@ class ApplicationSolar : public Application {
   void initializeShaderPrograms();
   void initializeGeometry();
   void initializeStars();
-  void initializeLights();
+  //void initializeLights();
+
   // update uniform values
   void uploadUniforms();
   // upload projection matrix
@@ -52,6 +53,7 @@ class ApplicationSolar : public Application {
   model_object star_object;
 
   std::shared_ptr<Node> raum_;
+  Scenegraph scenegraph_;
 
   std::vector<std::shared_ptr<GeometryNode>> geomList;
   std::map<std::string, glm::vec3> colors;
