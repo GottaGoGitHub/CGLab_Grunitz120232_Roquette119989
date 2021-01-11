@@ -258,8 +258,8 @@ void ApplicationSolar::renderPlanets() const {
 
   //Iterate over all Planets added to geomList
   for(auto& planet : geomList) {
-    std::string planet_name = planet->getName();
     auto holder = planet->getParent();
+    std::string planet_name = holder->getName();
     
     //init rotation matrix
     glm::fmat4 rotation_matrix;
