@@ -311,6 +311,7 @@ void ApplicationSolar::renderPlanets() const {
 
     //update point light
     auto light_node = root->getChildren("lightSource");
+    root->getChildrenList();
     auto light = std::static_pointer_cast<PointLightNode>(light_node);
     glm::vec3 light_color = light->getColor();
     float light_intensity = light->getIntensity();
