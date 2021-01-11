@@ -50,7 +50,8 @@ void ApplicationSolar::initializeSceneGraph() {
   scenegraph_ = Scenegraph{"Solarium", raum};
 
   //light
-  auto light = std::make_shared<PointLightNode>(raum, "lightSource", 1.0f, glm::vec3{1.0f, 1.0f, 1.0f}, glm::vec3{1.0f, 1.0f, 1.0f});
+  auto light = std::make_shared<PointLightNode>(raum, "lightSource", 1.0f, glm::vec3{1.0f, 1.0f, 1.0f}, glm::vec3{0.0f, 0.0f, 0.0f});
+  //light->setLocalTransform(glm::translate({}, glm::vec3{0.0f, 0.0f, 0.0f}));
   raum->addChild(light);
 
   //cam
@@ -292,7 +293,7 @@ void ApplicationSolar::renderPlanets() const {
         
     auto colorLocation = glGetUniformLocation(m_shaders.at("planet").handle, "planetColor");
     auto color = colors.find(planet_name);
-    glUniform3f(colorLocation, color->second.x, color->second.x, color->second.x);
+    glUniform3f(colorLocation, color->second.x, color->second.y, color->second.z);
 
     //update point light
     auto light_node = root->getChildren("lightSource");
