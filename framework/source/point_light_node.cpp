@@ -6,7 +6,7 @@ PointLightNode::PointLightNode(float const& intensity, glm::vec3 const& color) :
 {}
 
 PointLightNode::PointLightNode(std::shared_ptr<Node> const& parent, std::string const& name, float const& intensity, glm::vec3 const& color, glm::vec3 pos) : 
-    Node(parent, name),
+    Node(parent, name, glm::translate(glm::fmat4(1.0f), pos)),
     lightIntensity_{intensity},
     lightColor_{color},
     position_{pos}

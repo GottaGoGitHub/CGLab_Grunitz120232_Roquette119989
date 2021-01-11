@@ -6,6 +6,8 @@
 using namespace gl;
 
 #include <glm/gtc/type_precision.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <memory>
 #include <vector>

@@ -15,7 +15,8 @@ Node::Node() :
 
 Node::Node(std::shared_ptr<Node> const& parent, std::string const& name) : 
     parent_{parent},
-    name_{name}
+    name_{name}, 
+    localtransform_{glm::fmat4()}
 {}
 
 Node::Node(std::shared_ptr<Node> const& parent, std::string const& name, glm::fmat4 const& local) : 
