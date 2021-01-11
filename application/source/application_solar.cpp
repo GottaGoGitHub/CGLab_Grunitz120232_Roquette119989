@@ -50,7 +50,7 @@ void ApplicationSolar::initializeSceneGraph() {
   scenegraph_ = Scenegraph{"Solarium", raum};
 
   //light
-  auto light = std::make_shared<PointLightNode>(raum, "lightSource", 1.0f, glm::vec3{1.0f, 1.0f, 1.0f}, glm::vec3{0.0f, 0.0f, 0.0f});
+  auto light = std::make_shared<PointLightNode>(raum, "lightSource", 1.0f, glm::vec3{1.0f, 1.0f, 1.0f}, glm::vec3{1.0f, 1.0f, 1.0f});
   raum->addChild(light);
 
   //cam
@@ -242,21 +242,6 @@ void ApplicationSolar::initializeStars(){
   star_object.num_elements = GLsizei(amount);
 
 }
-/*
-void ApplicationSolar::initializeLights(){
-  for(auto lights : lightList){
-
-    auto intensity = glGetUniformLocation(m_shaders.at("planet").handle, "lightIntensity");
-    glUniform1f(intensity, lights->getIntensity());
-
-    auto color = glGetUniformLocation(m_shaders.at("planet").handle, "lightColor");
-    glUniform3f(color, lights->getColor()[0], lights->getColor()[1], lights->getColor()[2]);
-
-    auto position = glGetUniformLocation(m_shaders.at("planet").handle, "lightPos");
-    glUniform3f(position, lights->getPosition()[0], lights->getPosition()[1], lights->getPosition()[2]);
-
-  }
-}*/
 
 void ApplicationSolar::render() const {
   renderPlanets();
@@ -311,7 +296,6 @@ void ApplicationSolar::renderPlanets() const {
 
     //update point light
     auto light_node = root->getChildren("lightSource");
-    root->getChildrenList();
     auto light = std::static_pointer_cast<PointLightNode>(light_node);
     glm::vec3 light_color = light->getColor();
     float light_intensity = light->getIntensity();

@@ -19,7 +19,7 @@ void main() {
   vec3 normal = normalize(pass_Normal);
   vec3 vertex_position = pass_Position;
   
-  vec3 light_position = (pass_ViewMatrix * vec4(lightPos, 1.0f)).xyz;
+  vec3 light_position = (pass_ViewMatrix * vec4(lightPos, 1.0)).xyz;
   vec3 lightVec = light_position - vertex_position;
   lightVec = normalize(lightVec);
 
@@ -32,6 +32,6 @@ void main() {
   vec3 diffuse = max(dot(normal, lightVec), 0) * diffuseLight;
   vec3 specular = pow(max(dot(h, normal), 0), shininess) * specularLight;
 
-  out_Color = vec4((ambientLight + diffuse) * planetColor * lightIntensity + specular * lightColor, 1.0f);
+  out_Color = vec4((ambientLight + diffuse) * planetColor * lightIntensity + specular * lightColor, 1.0);
 
 }
