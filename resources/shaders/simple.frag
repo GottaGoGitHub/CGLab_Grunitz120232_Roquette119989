@@ -1,6 +1,7 @@
 #version 150
 
-in  vec3 pass_Normal, pass_Position, pass_Camera;
+in vec2 pass_Texture;
+in vec3 pass_Normal, pass_Position, pass_Camera;
 in mat4 pass_ViewMatrix;
 out vec4 out_Color;
 
@@ -9,13 +10,16 @@ uniform vec3 lightColor;
 uniform vec3 lightPos;
 uniform float lightIntensity;
 uniform vec3 camera;
+uniform sampler2D texture_simp;
 
-vec3 ambientLight = vec3(1.0, 1.0, 1.0);
+vec3 ambientLight = vec3(0.5, 0.5, 0.5);
 vec3 diffuseLight = vec3(1.0, 1.0, 1.0);
 vec3 specularLight = vec3(1.0, 1.0, 1.0);
-float shininess = 3.0f;
+float shininess = 20.0f;
 
 void main() {
+  vec4 planet_texture = texture(texture_simp, pass_Texture);
+
   vec3 normal = normalize(pass_Normal);
   vec3 vertex_position = pass_Position;
   
@@ -32,6 +36,8 @@ void main() {
   vec3 diffuse = max(dot(normal, lightVec), 0) * diffuseLight;
   vec3 specular = pow(max(dot(h, normal), 0), shininess) * specularLight;
 
-  out_Color = vec4((ambientLight + diffuse) * planetColor * lightIntensity + specular * lightColor, 1.0);
+  vec4 texture_color = vec4((ambientLight + diffuse) * planet_texture.rgb + specular * lightColor, 1.0);
 
+  out_Color = vec4((ambientLight + diffuse) * planetColor * lightIntensity + specular * lightColor, 1.0);
+  //out_Color = texture_color;
 }

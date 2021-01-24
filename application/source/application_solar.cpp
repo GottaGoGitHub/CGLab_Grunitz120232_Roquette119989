@@ -28,6 +28,7 @@ ApplicationSolar::ApplicationSolar(std::string const& resource_path)
 {
   initializeSceneGraph();
   initializeStars();
+  initializeTextures();
   initializeGeometry();
   initializeShaderPrograms();
 }
@@ -50,7 +51,7 @@ void ApplicationSolar::initializeSceneGraph() {
   scenegraph_ = Scenegraph{"Solarium", raum};
 
   //light
-  auto light = std::make_shared<PointLightNode>(raum, "lightSource", 1.0f, glm::vec3{1.0f, 1.0f, 1.0f}, glm::vec3{0.0f, 0.0f, 0.0f});
+  auto light = std::make_shared<PointLightNode>(raum, "lightSource", 3.0f, glm::vec3{1.0f, 1.0f, 1.0f}, glm::vec3{0.0f, 0.0f, 0.0f});
   //light->setLocalTransform(glm::translate({}, glm::vec3{0.0f, 0.0f, 0.0f}));
   raum->addChild(light);
 
@@ -244,6 +245,45 @@ void ApplicationSolar::initializeStars(){
 
 }
 
+void ApplicationSolar::initializeTextures() {
+  int i = 0;
+  for(auto& planet : geomList) {
+    auto holder = planet->getParent();
+    std::string planet_name = holder->getName();
+
+    pixel_data pixel;
+
+    try
+    {
+      pixel = texture_loader::file(m_resource_path + "textures/" + planet_name + "_map.png");
+    }
+    catch(std::exception e)
+    {
+      std::cout << e.what() << "Error: "<< planet_name << '\n';
+    }
+    
+    GLsizei width = (GLsizei)pixel.width;
+    GLsizei height = (GLsizei)pixel.height;
+    GLenum channel = pixel.channels;
+    GLenum channelType = pixel.channel_type;
+
+    glActiveTexture(GL_TEXTURE1 + 2 * i);
+    texture_object texture;
+    glGenTextures(1, &texture.handle);
+    texture.target = GL_TEXTURE_2D;
+    std::string textureName = planet_name + "_tex";
+    textList.insert({textureName, texture});
+
+    //glTexImage2D(texture.target, 0, GL_RGB, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
+
+    glTexParameteri(texture.target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(texture.target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+    glBindTexture(texture.target, texture.handle);
+    i++;
+  }
+}
+
 void ApplicationSolar::render() const {
   renderPlanets();
   renderStars();
@@ -291,6 +331,12 @@ void ApplicationSolar::renderPlanets() const {
     // bind the VAO to draw
     glBindVertexArray(planet_object.vertex_AO);
         
+    texture_object texture = textList.at(planet_name + "_tex");
+    glActiveTexture(GL_TEXTURE1 + 2 * count);
+    glBindTexture(texture.target, texture.handle);
+    int simp = glGetUniformLocation(m_shaders.at("planet").handle, "texture_simp");
+    glUniform1i(simp, texture.handle);
+
     auto colorLocation = glGetUniformLocation(m_shaders.at("planet").handle, "planetColor");
     auto color = colors.find(planet_name);
     glUniform3f(colorLocation, color->second.x, color->second.y, color->second.z);
