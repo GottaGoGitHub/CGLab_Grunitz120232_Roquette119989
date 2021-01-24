@@ -4,6 +4,7 @@
 #include "node.hpp"
 #include <string>
 #include <iostream>
+#include <glm/glm.hpp>
 
 class PointLightNode : public Node {
 public:
@@ -17,6 +18,7 @@ public:
     float getIntensity();
     void setColor(glm::vec3 const& color);
     glm::vec3 getColor();
+    //cut position
     void setPosition(glm::vec3 const& pos);
     glm::vec3 getPosition();
 

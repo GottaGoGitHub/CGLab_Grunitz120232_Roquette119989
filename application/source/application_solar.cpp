@@ -350,6 +350,7 @@ void ApplicationSolar::renderPlanets() const {
 
     auto lightPositionLocation = glGetUniformLocation(m_shaders.at("planet").handle, "lightPos");
     glUniform3f(lightPositionLocation, light_position.x, light_position.y, light_position.z);
+    //glUniform3f(lightPositionLocation, 0.0f, 0.0f, 0.0f);
 
     auto lightColorLocation = glGetUniformLocation(m_shaders.at("planet").handle, "lightColor");
     glUniform3f(lightColorLocation, light_color.x, light_color.y, light_color.z);
@@ -494,7 +495,11 @@ void ApplicationSolar::keyCallback(int key, int action, int mods) {
     uploadView();
   }
   else if (key == GLFW_KEY_D  && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
-    m_view_transform = glm::translate(m_view_transform, glm::fvec3{0.2f, 0.0f, 0.f});
+    m_view_transform = glm::translate(m_view_transform, glm::fvec3{0.2f, 0.0f, 0.0f});
+    uploadView();
+  }
+  else if(key == GLFW_KEY_O  && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+    m_view_transform = glm::lookAt(glm::vec3(m_view_transform[3]), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     uploadView();
   }
 }
@@ -513,8 +518,10 @@ void ApplicationSolar::mouseCallback(double pos_x, double pos_y) {
   m_view_transform = glm::rotate(m_view_transform, glm::radians(-(float)x), glm::vec3{0.0f, 1.0f, 0.0f});
   m_view_transform = glm::rotate(m_view_transform, glm::radians(-(float)y), glm::vec3{1.0f, 0.0f, 0.0f});
 
-  
-  
+  //glm::look_at
+  //glm::rotate -> around 1 axis at the time
+  //reset for looking at origin
+
   uploadView();
 }
 

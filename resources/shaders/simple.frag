@@ -25,19 +25,21 @@ void main() {
   
   vec3 light_position = (pass_ViewMatrix * vec4(lightPos, 1.0)).xyz;
   vec3 lightVec = light_position - vertex_position;
+
+  vec3 lightDecay = (20.0 * lightColor) / (pow(length(lightVec), 2));
+
   lightVec = normalize(lightVec);
 
-  vec3 camera_position = (pass_ViewMatrix * vec4(pass_Camera, 1.0)).xyz;
-  vec3 camVec = camera_position - vertex_position;
+  vec3 camVec = -vertex_position;
   camVec = normalize(camVec);
 
   vec3 h = normalize(lightVec + camVec);
 
-  vec3 diffuse = max(dot(normal, lightVec), 0) * diffuseLight;
-  vec3 specular = pow(max(dot(h, normal), 0), shininess) * specularLight;
+  float diffuse = max(dot(normal, lightVec), 0);
+  float specular = pow(max(dot(h, normal), 0), shininess);
 
   vec4 texture_color = vec4((ambientLight + diffuse) * planet_texture.rgb + specular * lightColor, 1.0);
 
-  out_Color = vec4((ambientLight + diffuse) * planetColor * lightIntensity + specular * lightColor, 1.0);
-  //out_Color = texture_color;
+  //out_Color = vec4((ambientLight + diffuse) * planetColor * lightIntensity + specular * lightColor, 1.0);
+  out_Color = texture_color;
 }
