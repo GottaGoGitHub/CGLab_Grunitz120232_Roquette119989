@@ -338,7 +338,7 @@ void ApplicationSolar::renderPlanets() const {
     glBindVertexArray(planet_object.vertex_AO);
         
     texture_object texture = textList.at(planet_name + "_tex");
-    glActiveTexture(GL_TEXTURE1 + 2 * count);
+    glActiveTexture(GL_TEXTURE0 + count);
     glBindTexture(texture.target, texture.handle);
     int simp = glGetUniformLocation(m_shaders.at("planet").handle, "texture_simp");
     glUniform1i(simp, texture.handle);
