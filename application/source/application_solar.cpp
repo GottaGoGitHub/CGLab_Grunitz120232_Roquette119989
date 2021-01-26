@@ -250,6 +250,7 @@ void ApplicationSolar::initializeTextures() {
   for(auto& planet : geomList) {
     auto holder = planet->getParent();
     std::string planet_name = holder->getName();
+    std::cout << planet_name << std::endl;
 
     pixel_data pixel;
 
@@ -267,19 +268,24 @@ void ApplicationSolar::initializeTextures() {
     GLenum channel = pixel.channels;
     GLenum channelType = pixel.channel_type;
 
-    glActiveTexture(GL_TEXTURE1 + 2 * i);
+    glActiveTexture(GL_TEXTURE0 + i);
     texture_object texture;
     glGenTextures(1, &texture.handle);
     texture.target = GL_TEXTURE_2D;
     std::string textureName = planet_name + "_tex";
     textList.insert({textureName, texture});
 
-    //glTexImage2D(texture.target, 0, GL_RGB, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-    glTexParameteri(texture.target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(texture.target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
     glBindTexture(texture.target, texture.handle);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, channel, width, height, 0, channel, channelType, pixel.ptr());
+
+
     i++;
   }
 }
@@ -294,7 +300,7 @@ void ApplicationSolar::renderPlanets() const {
   //init counter to have each planet different from another
   int count = 0;
   //Load planet_model into function
-  model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL);
+  model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL | model::TEXCOORD);
 
   //Iterate over all Planets added to geomList
   for(auto& planet : geomList) {
@@ -435,7 +441,7 @@ void ApplicationSolar::initializeShaderPrograms() {
 
 // load models
 void ApplicationSolar::initializeGeometry() {
-  model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL);
+  model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL | model::TEXCOORD);
 
   // generate vertex array object
   glGenVertexArrays(1, &planet_object.vertex_AO);
@@ -449,14 +455,6 @@ void ApplicationSolar::initializeGeometry() {
   // configure currently bound array buffer
   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * planet_model.data.size(), planet_model.data.data(), GL_STATIC_DRAW);
 
-  /*
-
-  planet_model.data.data(): A pointer to the data in system memory that will be copied to the data store during initialization 
-
-  GL_STATIC_DRAW: Specifies that the data store contents will be modified once by the application and drawn many times
-  
-  */
-
   // activate first attribute on gpu
   glEnableVertexAttribArray(0);
   // first attribute is 3 floats with no offset & stride
@@ -465,6 +463,9 @@ void ApplicationSolar::initializeGeometry() {
   glEnableVertexAttribArray(1);
   // second attribute is 3 floats with no offset & stride
   glVertexAttribPointer(1, model::NORMAL.components, model::NORMAL.type, GL_FALSE, planet_model.vertex_bytes, planet_model.offsets[model::NORMAL]);
+
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2, model::TEXCOORD.components, model::TEXCOORD.type, GL_FALSE, planet_model.vertex_bytes, planet_model.offsets[model::TEXCOORD]);
 
    // generate generic buffer
   glGenBuffers(1, &planet_object.element_BO);
