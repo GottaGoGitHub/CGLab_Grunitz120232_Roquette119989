@@ -18,7 +18,8 @@ vec3 specularLight = vec3(1.0, 1.0, 1.0);
 float shininess = 20.0f;
 
 void main() {
-  vec4 planet_texture = texture(texture_simp, pass_Texture);
+  vec4 planet_texture = texture(texture_simp, pass_Texture); //replaced pass_texture
+  //vec4 planet_texture = texture2D(texture_simp, pass_Texture);
 
   vec3 normal = normalize(pass_Normal);
   vec3 vertex_position = pass_Position;
@@ -42,4 +43,5 @@ void main() {
 
   //out_Color = vec4((ambientLight + diffuse) * planetColor * lightIntensity + specular * lightColor, 1.0);
   out_Color = texture_color;
+  ///out_Color = vec4(pass_Texture, 0, 1);
 }

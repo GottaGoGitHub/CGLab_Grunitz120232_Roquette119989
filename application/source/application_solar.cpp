@@ -267,6 +267,10 @@ void ApplicationSolar::initializeTextures() {
     GLsizei height = (GLsizei)pixel.height;
     GLenum channel = pixel.channels;
     GLenum channelType = pixel.channel_type;
+    //std::cout << width << std::endl;
+    //std::cout << height << std::endl;
+    //std::cout << channel << std::endl;
+    //std::cout << channelType << std::endl;
 
     glActiveTexture(GL_TEXTURE0 + i);
     texture_object texture;
@@ -285,7 +289,6 @@ void ApplicationSolar::initializeTextures() {
 
     glTexImage2D(GL_TEXTURE_2D, 0, channel, width, height, 0, channel, channelType, pixel.ptr());
 
-
     i++;
   }
 }
@@ -300,7 +303,7 @@ void ApplicationSolar::renderPlanets() const {
   //init counter to have each planet different from another
   int count = 0;
   //Load planet_model into function
-  model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL | model::TEXCOORD);
+  //model planet_model = model_loader::obj(m_resource_path + "models/sphere.obj", model::NORMAL | model::TEXCOORD);
 
   //Iterate over all Planets added to geomList
   for(auto& planet : geomList) {
@@ -312,13 +315,13 @@ void ApplicationSolar::renderPlanets() const {
     
     //Set different rotation matrix for Moon (Bentley)
     if(planet->getName() != "bentleyFlyingSpur_geom") {
-      rotation_matrix = glm::rotate(glm::fmat4{}, float(((20 - (count * 2)) * 0.0005f)), glm::fvec3{0, 1, 0});
+      rotation_matrix = glm::rotate(glm::fmat4{}, float(((20 - (count * 2)) * 0.000005f)), glm::fvec3{0, 1, 0});
     } else {
-      rotation_matrix = glm::rotate(glm::fmat4{}, 0.05f, glm::fvec3{0, 1, 0});
+      rotation_matrix = glm::rotate(glm::fmat4{}, 0.0005f, glm::fvec3{0, 1, 0});
     }
 
     //Set Geometry of Planet
-    planet->setGeometry(planet_model);
+    //planet->setGeometry(planet_model);
 
     //Set Localtransform of holder w "custom" matrix
     holder->setLocalTransform(rotation_matrix * holder->getLocalTransform());
@@ -340,8 +343,8 @@ void ApplicationSolar::renderPlanets() const {
     texture_object texture = textList.at(planet_name + "_tex");
     glActiveTexture(GL_TEXTURE0 + count);
     glBindTexture(texture.target, texture.handle);
-    int simp = glGetUniformLocation(m_shaders.at("planet").handle, "texture_simp");
-    glUniform1i(simp, texture.handle);
+    auto simp = glGetUniformLocation(m_shaders.at("planet").handle, "texture_simp");
+    glUniform1i(simp, count);
 
     auto colorLocation = glGetUniformLocation(m_shaders.at("planet").handle, "planetColor");
     auto color = colors.find(planet_name);
